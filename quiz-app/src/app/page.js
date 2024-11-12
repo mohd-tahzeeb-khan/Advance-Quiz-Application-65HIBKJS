@@ -5,6 +5,7 @@ const page = () => {
   return (
     <>
       <Header />
+      <Footer />
     </>
   )
 }
