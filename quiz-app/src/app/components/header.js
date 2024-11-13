@@ -6,7 +6,7 @@ const header = () => {
   return (
     <>
     <div className='header w-full h-[8vh] bg-lightblue2 text-slate-700
-    flex flex-row justify-between px-10 py-5'>
+    flex flex-row justify-between px-10 my-2'>
             <div className='logo min-w-[33%] p-0'><Image src={Horizontalogo} width={150} height={100} alt='logo' /></div>
         <div className='links min-w-[33%] 
         flex gap-12 items-center justify-center'>
