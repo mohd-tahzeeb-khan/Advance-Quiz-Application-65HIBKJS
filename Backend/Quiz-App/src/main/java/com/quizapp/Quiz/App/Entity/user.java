@@ -1,2 +1,4 @@
-package com.quizapp.Quiz.App.Entity;public class user {
+package com.quizapp.Quiz.App.Entity;
+
+public class user {
 }
