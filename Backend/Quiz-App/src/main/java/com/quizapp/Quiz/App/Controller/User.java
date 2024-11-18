@@ -20,6 +20,12 @@ public class User {
     private userService userservice;
 
 
+@GetMapping("/getbyemail")
+public ResponseEntity<user> getbyemail(@RequestBody user email) {
+    return new ResponseEntity<>(userservice.Getuser(email.getEmail()), HttpStatus.OK);
+
+}
+
 
 @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody user user) {
@@ -31,6 +37,8 @@ public class User {
         return new ResponseEntity<>("Error", HttpStatus.CONFLICT);
         }
 } //Function end -->Create
+
+    //<<----------------------------------------------------------------------------------->>
 
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody user user) {
@@ -47,8 +55,10 @@ public class User {
     else {
         return new ResponseEntity<>("Error", HttpStatus.CONFLICT);
     }
-    }
+    } //End of Function --->
 
+
+    //<<--------------------------------------------------------------------->>
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody String email) {
     if(email!=null) {
@@ -64,5 +74,5 @@ public class User {
     }else{
         return new ResponseEntity<>("Error", HttpStatus.NOT_FOUND);
     }
-    }
+    } //End of Function ---->
 }
