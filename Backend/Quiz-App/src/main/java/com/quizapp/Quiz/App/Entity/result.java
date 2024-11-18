@@ -1,10 +1,12 @@
 package com.quizapp.Quiz.App.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import org.antlr.v4.runtime.misc.NotNull;
+import org.hibernate.annotations.NotFound;
 
 @Entity
 @Data
@@ -12,5 +14,13 @@ import lombok.NoArgsConstructor;
 public class result {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int resultId;
+
+    @NotNull
+    private float score;
+    @NonNull
+    private String userEmail;
+
+    private String mcqId;
 }
