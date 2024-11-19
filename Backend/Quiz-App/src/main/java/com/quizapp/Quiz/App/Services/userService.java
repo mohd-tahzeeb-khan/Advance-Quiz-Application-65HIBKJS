@@ -15,8 +15,15 @@ public class userService {
 
 
     public Boolean CreateUser(@NotNull user userdata){
-        userrepositoryinstance.save(userdata);
-        return true;
+        user gettinguser=Getuser(userdata.getEmail());
+        if(gettinguser!=null){
+            return false;
+        }
+        else{
+            userrepositoryinstance.save(userdata);
+            return true;
+        }
+
     }
     public user Getuser(@NotNull String email) {
         user getuser;
