@@ -30,8 +30,12 @@ public ResponseEntity<user> getbyemail(@RequestBody user email) {
 @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody user user) {
     if(user!=null) {
-        userservice.CreateUser(user);
-        return new ResponseEntity<>("Create", HttpStatus.CREATED);
+        if(userservice.CreateUser(user)){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        else{
+            return new ResponseEntity<>("Already Registered Email address",HttpStatus.CONFLICT);
+        }
     }
     else{
         return new ResponseEntity<>("Error", HttpStatus.CONFLICT);
