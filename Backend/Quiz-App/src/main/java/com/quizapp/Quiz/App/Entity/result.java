@@ -1,6 +1,8 @@
 package com.quizapp.Quiz.App.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +17,20 @@ public class result {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int resultId;
+    @Column(unique = true, name = "id")
+    private int id;
 
     @NotNull
     private float score;
-    @NonNull
-    private String userEmail;
 
-    private String mcqId;
+    @OneToOne(mappedBy = "result")
+    private exams exams;
+//    @ManyToOne
+//    @JoinColumn(name = "user_id_email", referencedColumnName = "email")
+
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    @JsonIgnore
+    private user user;
 }
