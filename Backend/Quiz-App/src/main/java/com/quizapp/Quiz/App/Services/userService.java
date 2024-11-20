@@ -27,7 +27,7 @@ public class userService {
     }
     public user Getuser(@NotNull String email) {
         user getuser;
-        System.out.println(email);
+//        System.out.println(email);
         getuser = userrepositoryinstance.findByEmail(email);
         if(getuser == null) {
             return null;
