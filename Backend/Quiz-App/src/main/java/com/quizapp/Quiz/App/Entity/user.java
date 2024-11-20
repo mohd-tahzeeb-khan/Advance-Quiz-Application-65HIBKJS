@@ -40,11 +40,13 @@ public class user {
     @Column(nullable = false)
     private int zip;
 
-    @Column(nullable = false)
-    @OneToMany
-    private List<result> result = new ArrayList<>();
 
-    @Column(nullable = false)
-    @OneToMany
-    private List<exams> exams=new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<result> result = new ArrayList<>();
+//
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<exams> exams = new ArrayList<>();
+//    @Column(nullable = false)
+//    @OneToMany(mappedBy = "exam_id")
+//    private List<exams> exams=new ArrayList<>();
 }
