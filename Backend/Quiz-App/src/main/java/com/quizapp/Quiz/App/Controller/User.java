@@ -20,9 +20,9 @@ public class User {
     private userService userservice;
 
 
-@GetMapping("/getbyemail")
-public ResponseEntity<user> getbyemail(@RequestBody user email) {
-    return new ResponseEntity<>(userservice.Getuser(email.getEmail()), HttpStatus.OK);
+@GetMapping("/getbyemail/{email}")
+public ResponseEntity<user> getbyemail(@PathVariable String email) {
+    return new ResponseEntity<>(userservice.Getuser(email), HttpStatus.OK);
 
 }
 
