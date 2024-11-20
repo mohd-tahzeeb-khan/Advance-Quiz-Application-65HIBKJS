@@ -7,4 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Repository
 public interface resultRepo extends JpaRepository<result,Integer> {
+    public result findById(int id);
+//    public result getByEmail(String email);
 }
+
