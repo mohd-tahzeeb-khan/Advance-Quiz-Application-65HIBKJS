@@ -1,15 +1,53 @@
 package com.quizapp.Quiz.App.Entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.quizapp.Quiz.App.Controller.Result;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
 public class exams {
     @Id
-    private String Id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false)
+    private int exam_id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private int total_marks;
+
+    @Column(nullable = false)
+    private String creator;
+
+    @Column(nullable = false)
+    private LocalDateTime dateCreate;
+
+    @Column(nullable = false)
+    private String expiredate;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "result_id", referencedColumnName = "id")
+    private result result;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    @JsonIgnore
+    private user user;
+//
+//    @NonNull
+//    @ManyToOne
+//    private user user_id;
 }
