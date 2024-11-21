@@ -3,6 +3,7 @@ package com.quizapp.Quiz.App.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quizapp.Quiz.App.Controller.Result;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,15 +40,19 @@ public class exams {
     private String expiredate;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "result_id", referencedColumnName = "id")
+    @JoinColumn(name = "result_id")
+    @Nullable
     private result result;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     @JsonIgnore
+    @Nullable
     private user user;
-//
-//    @NonNull
-//    @ManyToOne
-//    private user user_id;
+
+    @ManyToOne
+    @JoinColumn(name="course_id")
+    @JsonIgnore
+    @Nullable
+    private course course;
 }
