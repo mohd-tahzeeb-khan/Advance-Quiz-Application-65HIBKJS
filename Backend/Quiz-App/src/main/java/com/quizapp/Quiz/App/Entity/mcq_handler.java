@@ -1,9 +1,9 @@
 package com.quizapp.Quiz.App.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.aspectj.weaver.patterns.TypePatternQuestions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-public class mcquestion {
+public class mcq_handler {
 
 
     @Id
@@ -21,6 +21,6 @@ public class mcquestion {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "mcq", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "mcq_handler", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<questions> questions = new ArrayList<>();
 }
