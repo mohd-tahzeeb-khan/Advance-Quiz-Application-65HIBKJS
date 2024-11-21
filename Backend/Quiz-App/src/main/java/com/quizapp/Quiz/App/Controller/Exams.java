@@ -15,13 +15,13 @@ public class Exams {
     private examService examservice;
 
     @PostMapping("/create/{email}")
-    public ResponseEntity<String> create(@PathVariable String email, @RequestBody exams examdata) {
-        boolean status=examservice.createExam(email, examdata);
-        return new ResponseEntity<>("created", HttpStatus.CREATED);
+    public ResponseEntity<?> create(@PathVariable String email, @RequestBody exams examdata) {
+        exams currentsave=examservice.createExam(email, examdata);
+        return new ResponseEntity<>(currentsave, HttpStatus.CREATED);
     }
-    @GetMapping("/getexams/{email}")
-    public ResponseEntity<exams> getexams(@PathVariable String email) {
-        exams exam=examservice.GetExam(email);
-        return new ResponseEntity<>(exam, HttpStatus.OK);
-    }
+//    @GetMapping("/getexams/{email}")
+//    public ResponseEntity<exams> getexams(@PathVariable String email) {
+//        exams exam=examservice.GetExam(email);
+//        return new ResponseEntity<>(exam, HttpStatus.OK);
+//    }
 }
