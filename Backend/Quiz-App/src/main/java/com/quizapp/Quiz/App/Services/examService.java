@@ -11,6 +11,7 @@ import com.quizapp.Quiz.App.Repository.examsRepo;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -26,31 +27,21 @@ public class examService {
 
 
 
-    public boolean createExam( String email, exams examdata){
-        if(examdata !=null){
-            user currentuser=userservice.Getuser(email);
-          List<result> currentuserresult=resultservice.getuserresult(email);
-          try {
-              System.out.println(currentuser);
-          }catch(Exception e){
-              System.out.println(e);
-          }
+    public exams createExam( String email, exams examdata){
+        if(examdata !=null) {
+            user currentuser = userservice.Getuser(email);
+            List<result> currentuserresult = resultservice.getuserresult(email);
             examdata.setDateCreate(LocalDateTime.now());
             examdata.setCreator(email);
             examdata.setUser(currentuser);
-
-            examsRepo.save(examdata);
-            return true;
-
+            return examsRepo.save(examdata);
         }
-        else{
-            return false;
+        return null;
         }
+    public exams GetExam(int id){
+        return examsRepo.getById(id);
     }
-    public exams GetExam(String email){
-        user currentuser=userservice.Getuser(email);
-        result result=currentuser.getResult();
-        return examsRepo.getReferenceById();
     }
 
-}
+
+//}
