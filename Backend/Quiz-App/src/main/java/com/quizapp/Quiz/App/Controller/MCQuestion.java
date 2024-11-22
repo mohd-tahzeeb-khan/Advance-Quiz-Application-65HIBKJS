@@ -8,6 +8,7 @@ import com.quizapp.Quiz.App.Services.questionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
         import java.util.List;
@@ -37,10 +38,19 @@ public class MCQuestion {
     @PostMapping("/addquestions/{id}")
     public ResponseEntity<?> createMCQ(@PathVariable int id,@RequestBody questions mcq) {
         questions addquestions=questionservice.addquestions(id, mcq);
+
         return new ResponseEntity<>(addquestions, HttpStatus.OK);
     }
 
-    @Pu
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateMCQ(@NonNull @PathVariable int id, @RequestBody questions mcq) {
+        questions responseupdate=mcqservice.updatedata(id, mcq);
+        if (responseupdate == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseupdate,HttpStatus.OK);
+    }
 
 
 
