@@ -27,10 +27,9 @@ public class questions {
     @Column(name = "options")
     private List<String> options;
 
-    @ElementCollection
-    @CollectionTable(name = "question_answer", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "answer")
-    private List<String> answer;
+    @OneToMany
+    @CollectionTable(name = "question_answer", joinColumns = @JoinColumn(name = "answers_id"))
+    private answers answers;
 
     @ManyToOne
     @JoinColumn(name = "mcq_id", nullable = false)
