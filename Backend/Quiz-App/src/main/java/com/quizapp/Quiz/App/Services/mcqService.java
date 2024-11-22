@@ -2,7 +2,9 @@ package com.quizapp.Quiz.App.Services;
 
 
 import com.quizapp.Quiz.App.Entity.mcq_handler;
+import com.quizapp.Quiz.App.Entity.questions;
 import com.quizapp.Quiz.App.Repository.mcqRepo;
+import com.quizapp.Quiz.App.Repository.questionsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,9 @@ public class mcqService {
 
     @Autowired
     private mcqRepo mcqrepoinstance;
+
+    @Autowired
+    private questionsRepo questionsrepoinstance;
 
 
     public mcq_handler createmcq(mcq_handler mcq) {
@@ -30,4 +35,14 @@ public class mcqService {
         List<mcq_handler> responseback=mcqrepoinstance.findAll();
         return responseback;
     }
+    public questions updatedata(int id, questions questions){
+        questions getdata= questionsrepoinstance.getById(id);
+        if(getdata!=null){
+//            getdata.setAnswer(questions.getAnswer());
+            getdata.setQuestion(questions.getQuestion());
+            return questionsrepoinstance.save(getdata);
+        }
+        return null;
+    }
+
 }
