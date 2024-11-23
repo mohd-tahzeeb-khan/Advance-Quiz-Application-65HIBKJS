@@ -38,8 +38,8 @@ public class examService {
         }
         return null;
         }
-    public exams GetExam(int id){
-        return examsRepo.getById(id);
+    public exams getExam(int id){
+        return examsRepo.findById(id).orElse(null);
     }
     }
 
