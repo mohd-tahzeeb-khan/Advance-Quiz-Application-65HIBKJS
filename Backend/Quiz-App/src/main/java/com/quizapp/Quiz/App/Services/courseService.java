@@ -41,7 +41,7 @@ public class courseService {
     public ResponseEntity<?> addexamtocouse(@NonNull int id, @NonNull String username, @NonNull exams exams) {
         exams currentsaveexams=examservice.createExam(username, exams);
         int idd=currentsaveexams.getExam_id();
-        exams examdetails=examservice.GetExam(idd);
+        exams examdetails=examservice.getExam(idd);
 
         Optional<course> course=courserepoinstance.findById(id);
         course currentcourse=course.get();
