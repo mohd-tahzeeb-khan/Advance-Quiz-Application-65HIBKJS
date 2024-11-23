@@ -22,9 +22,22 @@ public class mcqService {
     private questionsRepo questionsrepoinstance;
 
 
+
+
     public mcq_handler createmcq(mcq_handler mcq) {
         mcq_handler responseback=mcqrepoinstance.save(mcq);
         return responseback;
+    }
+
+    public mcq_handler addanswer(int id, String answer) {
+        Optional<mcq_handler> getmcq=mcqrepoinstance.findById(id);
+        if (getmcq.isPresent()) {
+            mcq_handler mcq=getmcq.get();
+            mcq.getAnswers().add(answer);
+            return  mcqrepoinstance.save(mcq);
+
+        }
+        return  null;
     }
 
     public Optional<mcq_handler> getdatabyid(int id) {
