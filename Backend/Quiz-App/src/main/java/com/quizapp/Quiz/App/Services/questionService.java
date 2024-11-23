@@ -2,7 +2,6 @@ package com.quizapp.Quiz.App.Services;
 
 import com.quizapp.Quiz.App.Entity.mcq_handler;
 import com.quizapp.Quiz.App.Entity.questions;
-import com.quizapp.Quiz.App.Repository.answersRepo;
 import com.quizapp.Quiz.App.Repository.questionsRepo;
 import jakarta.servlet.MultipartConfigElement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +21,6 @@ public class questionService {
 
 
     @Autowired
-    private answersRepo answersrepoinstence;
-    @Autowired
     private MultipartConfigElement multipartConfigElement;
 
 
@@ -32,8 +29,6 @@ public class questionService {
         if(mcq_handler.isPresent()){
             mcq_handler mcq_handlerOptional=mcq_handler.get();
             questions.setMcq_handler(mcq_handlerOptional);
-
-//            answersrepoinstence.save(questions.getAnswers());
             return questionrepoinstence.save(questions);
         }
         throw new RuntimeException("Please Enter the data properly."+id);
