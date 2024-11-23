@@ -2,8 +2,6 @@ package com.quizapp.Quiz.App.Controller;
 
 
 import com.quizapp.Quiz.App.Entity.mcq_handler;
-import com.quizapp.Quiz.App.Entity.questions;
-import com.quizapp.Quiz.App.Services.answersService;
 import com.quizapp.Quiz.App.Services.mcqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,8 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -24,8 +20,7 @@ public class Test {
     @Autowired
     private mcqService mcqservice;
 
-    @Autowired
-    private answersService answersservice;
+
 
     @GetMapping("/gettest/{id}")
     public ResponseEntity<?> getTestId(@PathVariable int id) {
@@ -39,7 +34,7 @@ public class Test {
     @GetMapping("/getall")
     public ResponseEntity<?> getAll() {
 
-        return new ResponseEntity(answersservice.getall(), HttpStatus.OK);
+        return new ResponseEntity("created", HttpStatus.OK);
     }
 
 }
