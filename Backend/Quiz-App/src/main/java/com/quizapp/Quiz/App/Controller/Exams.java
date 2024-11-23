@@ -19,9 +19,14 @@ public class Exams {
         exams currentsave=examservice.createExam(email, examdata);
         return new ResponseEntity<>(currentsave, HttpStatus.CREATED);
     }
-//    @GetMapping("/getexams/{email}")
-//    public ResponseEntity<exams> getexams(@PathVariable String email) {
-//        exams exam=examservice.GetExam(email);
-//        return new ResponseEntity<>(exam, HttpStatus.OK);
-//    }
+    @GetMapping("/getexams/{id}")
+    public ResponseEntity<?> getexams(@PathVariable int id) {
+        exams exam=examservice.getExam(id);
+        if(exam!=null){
+            return new ResponseEntity<>(exam, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Exam not found", HttpStatus.NOT_FOUND);
+        }
+
+  }
 }
