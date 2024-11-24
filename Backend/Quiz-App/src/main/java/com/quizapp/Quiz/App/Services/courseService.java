@@ -38,23 +38,54 @@ public class courseService {
         return true;
     }
 
-    public ResponseEntity<?> addexamtocouse(@NonNull int id, @NonNull String username, @NonNull exams exams) {
-        exams currentsaveexams=examservice.createExam(username, exams);
+    public boolean addexamtocouse(@NonNull int id, @NonNull String username, @NonNull exams exams) {
+        exams currentsaveexams=examservice.createExam(id, username, exams);
         int idd=currentsaveexams.getExam_id();
         exams examdetails=examservice.getExam(idd);
+        if(examdetails!=null){
+            Optional<course> course=courserepoinstance.findById(id);
+            course currentcourse=course.get();
+            currentcourse.getExams().add(currentsaveexams);
+            courserepoinstance.save(currentcourse);
+            return true;
 
-        Optional<course> course=courserepoinstance.findById(id);
-        course currentcourse=course.get();
-        System.out.println(currentcourse);
-        currentcourse.getExams().add(currentsaveexams);
-        System.out.println(currentcourse);
-        courserepoinstance.save(currentcourse);
-        return new ResponseEntity<>(currentsaveexams, HttpStatus.OK);
+        }
+        else{
+            return false;
+        }
+
+
+
 
 
 
     }
+    public Optional<course> getCourseById(int id){
+        if(courserepoinstance.findById(id).isPresent()){
+            return courserepoinstance.findById(id);
+        }
+        return null;
+    }
     public List<course> getallcouse(){
         return courserepoinstance.findAll();
+    }
+
+
+    public boolean isExist(int id) {
+        if(courserepoinstance.findById(id).isPresent()) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public course getcourseById(int id) {
+        Optional<course> course=courserepoinstance.findById(id);
+        if(course.isPresent()){
+            return course.get();
+        }
+        else{
+            return null;
+        }
     }
 }
