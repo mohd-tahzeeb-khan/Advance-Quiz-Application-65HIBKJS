@@ -14,10 +14,15 @@ public class Exams {
     @Autowired
     private examService examservice;
 
-    @PostMapping("/create/{email}")
-    public ResponseEntity<?> create(@PathVariable String email, @RequestBody exams examdata) {
-        exams currentsave=examservice.createExam(email, examdata);
-        return new ResponseEntity<>(currentsave, HttpStatus.CREATED);
+    @PostMapping("/create/{id}/{email}")
+    public ResponseEntity<?> create(@PathVariable int id, @PathVariable String email, @RequestBody exams examdata) {
+        exams currentsave=examservice.createExam(id, email, examdata);
+        if(currentsave!=null){
+            return new ResponseEntity<>(currentsave, HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
     }
     @GetMapping("/getexams/{id}")
     public ResponseEntity<?> getexams(@PathVariable int id) {
@@ -29,4 +34,17 @@ public class Exams {
         }
 
   }
+  @DeleteMapping("delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable int id) {
+
+        if(examservice.deleteExam(id)){
+            return new ResponseEntity<>(HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Exam not found", HttpStatus.NOT_FOUND);
+        }
+
+
+
+  }
+
 }
