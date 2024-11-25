@@ -5,13 +5,27 @@ import com.quizapp.Quiz.App.Entity.user;
 import com.quizapp.Quiz.App.Repository.userRepo;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class userService {
 
     @Autowired
     private userRepo userrepositoryinstance;
+
+    @Autowired
+    private mailsender mailsenderinstance;
+
+    @Autowired
+    private randomNoGenerateandCheck randomnogenerateandcheck;
+
+
+
+    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     public Boolean CreateUser(@NotNull user userdata){
@@ -20,7 +34,9 @@ public class userService {
             return false;
         }
         else{
+            userdata.setPassword(passwordEncoder.encode(userdata.getPassword()));
             userrepositoryinstance.save(userdata);
+            mailsenderinstance.sendMail(userdata.getEmail(), "Account Created Successfully" , "Thank you for Creating your Account!");
             return true;
         }
 
@@ -52,4 +68,44 @@ public class userService {
 
         }
     }
+
+    public int forgetPasswordMailSender(@NotNull String email){
+        user gettinguser= userrepositoryinstance.findByEmail(email);
+        if(gettinguser != null) {
+            String useremail=gettinguser.getEmail();
+            String name=gettinguser.getName();
+            int otp=randomnogenerateandcheck.generateRandomNumber();
+            String Body="Hello"+name+", you requested as to Reset your existing password. To Reset your Existing password you" +
+                    "have to enter this OTP(ONE TIME PASSWORD   " + otp +
+                    "   *Remember* Do Not Share this OTP with Others";
+            mailsenderinstance.otpMail(useremail, "OTP from Quizzer.com",Body);
+            gettinguser.setOtp(otp);
+            userrepositoryinstance.save(gettinguser);
+            return otp;
+        }
+        else{
+            return 0;
+        }
+    }
+
+//    <---------------------------------------------------------------------------------->
+//    <--------------------------Verify OPT and Change password-------------------------->
+    public boolean verifyandchange(int opt, String password, String email){
+        user user=userrepositoryinstance.findByEmail(email);
+        if(user != null) {
+            int getopt=user.getOtp();
+            if(getopt == opt) {
+                user.setPassword(passwordEncoder.encode(password));
+                user.setOtp(0);
+                userrepositoryinstance.save(user);
+                return true;
+            }else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
 }
