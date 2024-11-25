@@ -30,12 +30,19 @@ public ResponseEntity<user> getbyemail(@PathVariable String email) {
 @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody user user) {
     if(user!=null) {
-        if(userservice.CreateUser(user)){
-            return new ResponseEntity<>(HttpStatus.CREATED);
+        user usergetting=userservice.Getuser(user.getEmail());
+        if(usergetting==null) {
+            if(userservice.CreateUser(user)){
+                return new ResponseEntity<>(HttpStatus.CREATED);
+            }
+            else{
+                return new ResponseEntity<>("Already Registered Email address",HttpStatus.CONFLICT);
+            }
         }
         else{
-            return new ResponseEntity<>("Already Registered Email address",HttpStatus.CONFLICT);
+            return new ResponseEntity<>("Email Already Exists",HttpStatus.CONFLICT);
         }
+
     }
     else{
         return new ResponseEntity<>("Error", HttpStatus.CONFLICT);
@@ -61,7 +68,27 @@ public ResponseEntity<user> getbyemail(@PathVariable String email) {
     }
     } //End of Function --->
 
+    @PostMapping("/forgetpassword/{email}")
+    public ResponseEntity<?> forgetpassword(@PathVariable String email) {
+    if(email!=null) {
+        int otp=userservice.forgetPasswordMailSender(email);
+        return new ResponseEntity<>("OTP send, This is your "+otp, HttpStatus.OK);
+    }else{
+        return new ResponseEntity<>("email no found", HttpStatus.NOT_FOUND);
+    }
+    }
 
+//  <------------------------------------------------------------------------->
+//    <----------------Verify OTP--------------------------------------->
+    @PostMapping("/forgetpassword/verify/{email}")
+    public ResponseEntity<?> forgetpasswordverify(@RequestBody user user, @PathVariable String email) {
+        boolean statusupdate=userservice.verifyandchange(user.getOtp(), user.getPassword(), email);
+        if(statusupdate) {
+            return new ResponseEntity<>("Password Changed"+user.getOtp(), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("Password Not Changed"+user.getOtp(), HttpStatus.NOT_FOUND);
+        }
+    }
     //<<--------------------------------------------------------------------->>
     @PostMapping("/delete")
     public ResponseEntity<?> delete(@RequestBody String email) {
