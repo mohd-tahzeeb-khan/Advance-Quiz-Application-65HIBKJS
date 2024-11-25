@@ -40,6 +40,9 @@ public class user {
     @Column(nullable = false)
     private int zip;
 
+    @Column(nullable = true)
+    private int otp=0;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<result> result = new ArrayList<>();
