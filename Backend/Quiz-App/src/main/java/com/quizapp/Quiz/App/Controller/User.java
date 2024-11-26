@@ -26,28 +26,7 @@ public ResponseEntity<user> getbyemail(@PathVariable String email) {
 
 }
 
-@CrossOrigin("http://localhost:3000")
-@PostMapping("/create")
-    public ResponseEntity<?> create(@RequestBody user user) {
-    if(user!=null) {
-        user usergetting=userservice.Getuser(user.getEmail());
-        if(usergetting==null) {
-            if(userservice.CreateUser(user)){
-                return new ResponseEntity<>(HttpStatus.CREATED);
-            }
-            else{
-                return new ResponseEntity<>("Already Registered Email address",HttpStatus.CONFLICT);
-            }
-        }
-        else{
-            return new ResponseEntity<>("Email Already Exists",HttpStatus.CONFLICT);
-        }
 
-    }
-    else{
-        return new ResponseEntity<>("Error", HttpStatus.CONFLICT);
-        }
-} //Function end -->Create
 
     //<<----------------------------------------------------------------------------------->>
 
