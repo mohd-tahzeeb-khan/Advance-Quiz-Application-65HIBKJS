@@ -32,10 +32,10 @@ public class examService {
     private courseService courseservice;
 
 
-
+    //Input Parameter id=>This is the Course id which is primary key in course. , email=>username(Email) is a primary key for the Examiner, examdata=>exam data.
     public exams createExam(int id, String email, exams examdata){
         if(examdata !=null) {
-            if(courseservice.isExist(id)){
+            if(courseservice.isExist(id) && userservice.isExist(email)){
                 Optional<course> getcourse=courseservice.getCourseById(id);
                 course course = getcourse.get();
                 user currentuser = userservice.Getuser(email);
