@@ -5,6 +5,8 @@ import com.quizapp.Quiz.App.Services.examService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,16 +16,25 @@ public class Exams {
     @Autowired
     private examService examservice;
 
-    @PostMapping("/create/{id}/{email}")
-    public ResponseEntity<?> create(@PathVariable int id, @PathVariable String email, @RequestBody exams examdata) {
+    //<----------------------------------------------------------------------------------------->
+    //Request Handler for creating new Exam. Parameter values : id=> id of the course. examdata=>data of the exams.
+    @PostMapping("/create/{id}")
+    public ResponseEntity<?> create(@PathVariable int id, @RequestBody exams examdata) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        System.out.println(id);
+        System.out.println(email);
+        System.out.println(authentication);
         exams currentsave=examservice.createExam(id, email, examdata);
         if(currentsave!=null){
             return new ResponseEntity<>(currentsave, HttpStatus.CREATED);
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
 
-    }
+    }// Method End --> CreateExam
+
+    //<---------------------------------------------------------------------------------->
     @GetMapping("/getexams/{id}")
     public ResponseEntity<?> getexams(@PathVariable int id) {
         exams exam=examservice.getExam(id);
