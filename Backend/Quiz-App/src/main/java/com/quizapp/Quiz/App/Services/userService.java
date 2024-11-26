@@ -106,6 +106,18 @@ public class userService {
         else{
             return false;
         }
+    }// Method End verifyandchange
+//--------------------------------------------------------------------------------------------------
+
+
+    public boolean isExist(String email){
+        user gettinguser=userrepositoryinstance.findByEmail(email);
+        if(gettinguser != null) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 }
