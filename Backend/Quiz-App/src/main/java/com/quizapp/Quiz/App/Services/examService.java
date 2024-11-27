@@ -59,8 +59,13 @@ public class examService {
         }
         return null;
         }
-    public exams getExam(int id){
-        return examsRepo.findById(id).orElse(null);
+    public exams getExam(int id, String email){
+        if(id!=0){
+            return examsRepo.findById(id).orElse(null);
+        }
+        else{
+            return null;
+        }
 
     }
     public boolean deleteExam(int id){
