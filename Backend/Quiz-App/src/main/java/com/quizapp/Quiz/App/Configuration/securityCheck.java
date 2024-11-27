@@ -31,8 +31,8 @@ public class securityCheck {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, jwtFilter jwtFilter) throws Exception {
 
         return http.authorizeHttpRequests(request -> request
-                        .requestMatchers("/user/**","/auth/**", "/course/**" ).permitAll()
-                        .requestMatchers("exam/**").authenticated()
+                        .requestMatchers("/exam/**","/auth/**", "/course/**",  "/mcquestion/**").permitAll()
+                        .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/examiner/**").hasRole("examiner")
                         .anyRequest().authenticated()
                 )
