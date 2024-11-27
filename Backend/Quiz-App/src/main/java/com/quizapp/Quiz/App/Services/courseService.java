@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,8 +42,10 @@ public class courseService {
 
     public boolean addexamtocouse(@NonNull int id, @NonNull String username, @NonNull exams exams) {
         exams currentsaveexams=examservice.createExam(id, username, exams);
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
         int idd=currentsaveexams.getExam_id();
-        exams examdetails=examservice.getExam(idd);
+        exams examdetails=examservice.getExam(idd, email);
         if(examdetails!=null){
             Optional<course> course=courserepoinstance.findById(id);
             course currentcourse=course.get();
