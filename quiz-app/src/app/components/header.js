@@ -2,6 +2,9 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Horizontalogo from '../../../public/Images/horizon logo.png'
+// import Signup from '../userLogs/Signup'
+// import Signup from '../userLogs/signup'
+// import signup from '../userLogs/signup'
 const header = () => {
   return (
     <>
@@ -18,8 +21,9 @@ const header = () => {
         <div className='loginbtn min-w-[33%]
         flex gap-3 justify-end items-center
         font-bold text-xl'>
-            <div className='signup    hover:scale-105 hover:duration-150 px-4 py-2 border-2'>Signup</div>
-            <div className='loginbtn  hover:scale-105 hover:duration-150 px-4 py-2 border-2  '>Login</div>
+            <Link className='signup    hover:scale-105 hover:duration-150 px-4 py-2 border-2 cursor-pointer' href="/userLogs">Signup</Link>
+
+            <Link href="/mcQuestions" className='loginbtn  hover:scale-105 hover:duration-150 px-4 py-2 border-2  cursor-pointer'>Login</Link>
         </div>
 
 
