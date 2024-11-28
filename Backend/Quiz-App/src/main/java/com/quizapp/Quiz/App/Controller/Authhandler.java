@@ -91,6 +91,18 @@ public class Authhandler {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
 }//Method end -->loginUser
+
+    @PostMapping("/login/user/autho")
+    public ResponseEntity<?> loginAuthOUser(@RequestBody user user) {
+        try {
+//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
+            UserDetails userDetails= userdetailsservice.loadUserByUsername(user.getEmail());
+            String jwt=jwtUtil.generateToken(user.getEmail());
+            return new ResponseEntity<>(jwt,HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        }
+    }
 // <--------------------------------------------------------------------------------------------------------------->
 
 
