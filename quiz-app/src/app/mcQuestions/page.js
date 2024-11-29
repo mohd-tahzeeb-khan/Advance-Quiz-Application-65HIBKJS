@@ -19,6 +19,7 @@ const QuestionsPage = () => {
     fetchQuestions();
   }, []);
 
+
   return (
     <div>
       <h1>All Questions</h1>
@@ -31,6 +32,7 @@ const QuestionsPage = () => {
             <li key={exam.exam_id}>{exam.creator}{exam.title}{exam.expiredate}{exam.total_marks}{exam.description}</li>
           ))
         }
+        {/* <button onClick={}>Click me Result</button> */}
       </ul>
     </div>
   );
