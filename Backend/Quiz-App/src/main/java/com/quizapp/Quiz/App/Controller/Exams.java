@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("exam")
+@CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin("http://localhost:3000")
 public class Exams {
 
     @Autowired
@@ -41,6 +43,7 @@ public class Exams {
     }// Method End --> CreateExam
 
     //<---------------------------------------------------------------------------------->
+
     @GetMapping("/getexams/{id}")
     public ResponseEntity<?> getexams(@PathVariable int id) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
