@@ -8,7 +8,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpbWFhbmNhdGVyczc4NkBnbWFpbC5jb20iLCJpYXQiOjE3MzI4ODE0NjksImV4cCI6MTczMjg4NTA2OX0.ArNdcfTO1a4nyyNLa5h0VUfUCyYppATpJpJun3IBRPc";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMyOTYzMDE1LCJleHAiOjE3MzI5NjY2MTV9.k1kM1yNXbN_dTvoaX7SFC8kQxz9CetdQ6weUS_TbI6M";
   const { examid } = useParams();  // Get examid from URL params
   console.log('Exam ID:', examid);
 
@@ -31,12 +31,14 @@ export default function Page() {
       const config = {
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type":"application/json",
         },
+        //withCredentials:true,
       };
 
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:8080/exam/getexams/${parsedId}`, config);
+      const response = await axios.get(`http://localhost:8080/exam/getexams/${examid}`, config);
         const data = response.data;
         setExams(data);
         console.log("Fetched exams:", data);
@@ -57,12 +59,10 @@ export default function Page() {
   return (
     <div>
       <h2>Exam Details</h2>
-      {Exams.map((exam) => (
-        <div key={exam.ex_id}>
-          <h3>{exam.title}</h3>
-          <p>Duration: {exam.duration}</p>
-        </div>
-      ))}
+      <div className="flex">Title: <h3>{Exams.title}</h3></div>
+      <div className="flex">Marks: <h3>{Exams.total_marks}</h3></div>
+      <div className="flex">Description: <h3>{Exams.description}</h3></div>
+      <div className="flex">Creator: <h3>{Exams.creator}</h3></div>
     </div>
   );
 }
