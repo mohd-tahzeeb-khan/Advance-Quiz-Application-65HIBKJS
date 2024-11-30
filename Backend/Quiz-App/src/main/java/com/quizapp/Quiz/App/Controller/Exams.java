@@ -56,6 +56,7 @@ public class Exams {
 //            return new ResponseEntity<>(exam, HttpStatus.OK);
             if(exam!=null){
                 System.out.println(exam.getExam_id());
+                exam.setTitle(null);
                 return new ResponseEntity<>(exam, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Exam not found", HttpStatus.NOT_FOUND);
