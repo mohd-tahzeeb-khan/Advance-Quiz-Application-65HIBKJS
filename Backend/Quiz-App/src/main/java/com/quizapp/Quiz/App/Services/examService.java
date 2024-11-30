@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.quizapp.Quiz.App.Repository.examsRepo;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -76,9 +77,14 @@ public class examService {
         else{
             return false;
         }
-
-
-
+    }
+    public List<?> getallexam(){
+        List<?> exams= examsRepo.findAll();
+        if(exams.size()>0){
+            return exams;
+        }else{
+            return null;
+        }
     }
     }
 
