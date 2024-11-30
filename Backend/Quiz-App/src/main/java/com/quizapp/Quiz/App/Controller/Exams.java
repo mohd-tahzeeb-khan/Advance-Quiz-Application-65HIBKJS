@@ -3,6 +3,7 @@ package com.quizapp.Quiz.App.Controller;
 import com.quizapp.Quiz.App.Entity.exams;
 import com.quizapp.Quiz.App.Services.examService;
 import com.quizapp.Quiz.App.Services.getloginService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("exam")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:4000", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 //@CrossOrigin("http://localhost:3000")
 public class Exams {
 
@@ -50,7 +53,9 @@ public class Exams {
         String email=authentication.getName();
         if(getloginservice.getAuth(email)){
             exams exam=examservice.getExam(id, email);
+//            return new ResponseEntity<>(exam, HttpStatus.OK);
             if(exam!=null){
+                System.out.println(exam.getExam_id());
                 return new ResponseEntity<>(exam, HttpStatus.OK);
             }else{
                 return new ResponseEntity<>("Exam not found", HttpStatus.NOT_FOUND);
@@ -79,5 +84,24 @@ public class Exams {
 
 
   }
+  @GetMapping("/getallexam")
+  public ResponseEntity<?> getAllExam() {
+      List<?> exams=examservice.getallexam();
+      if(exams!=null){
+          return new ResponseEntity<>(exams, HttpStatus.OK);
+      }
+        return new ResponseEntity<>("No Exams", HttpStatus.NOT_FOUND);
+  }
+    @GetMapping("/get-port")
+    public String getPort(HttpServletRequest request) {
+        // Get the port of the incoming request
+        int port = request.getServerPort();
+        return "Request received on port: " + port;
+    }
+
+    @RequestMapping(method = RequestMethod.OPTIONS)
+    public ResponseEntity<Void> handleOptions() {
+        return ResponseEntity.ok().build();
+    }
 
 }
