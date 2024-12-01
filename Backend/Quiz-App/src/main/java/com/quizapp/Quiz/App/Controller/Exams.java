@@ -24,6 +24,8 @@ public class Exams {
 
     @Autowired
     private getloginService getloginservice;
+    @Autowired
+    private com.quizapp.Quiz.App.Services.userService userService;
 
     //<----------------------------------------------------------------------------------------->
     //Request Handler for creating new Exam. Parameter values : id=> id of the course. examdata=>data of the exams.
@@ -87,11 +89,17 @@ public class Exams {
   }
   @GetMapping("/getallexam")
   public ResponseEntity<?> getAllExam() {
-      List<?> exams=examservice.getallexam();
-      if(exams!=null){
-          return new ResponseEntity<>(exams, HttpStatus.OK);
+      Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+      String email=authentication.getName();
+      if(email!=null){
+          List<?> exams=examservice.getallexam();
+          if(exams!=null){
+              return new ResponseEntity<>(exams, HttpStatus.OK);
+          }
+          return new ResponseEntity<>("No Exams", HttpStatus.NOT_FOUND);
+      }else{
+          return new ResponseEntity<>("User s not valid", HttpStatus.UNAUTHORIZED);
       }
-        return new ResponseEntity<>("No Exams", HttpStatus.NOT_FOUND);
   }
     @GetMapping("/get-port")
     public String getPort(HttpServletRequest request) {
