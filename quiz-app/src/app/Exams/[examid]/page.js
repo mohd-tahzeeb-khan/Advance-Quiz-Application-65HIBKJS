@@ -8,7 +8,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDUzMTY5LCJleHAiOjE3MzMwNTY3Njl9.0kYkfwDaZt2AFJeEVTnMFwxy_zKWKd9plReoeQjF1fA";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDgxNTM2LCJleHAiOjE3MzMwODUxMzZ9._kfqusNjpfRZqa6oTwwbpXuCjYWPhonv59xM6_Iizyg";
   const { examid } = useParams();  // Get examid from URL params
   console.log('Exam ID:', examid);
 
@@ -38,6 +38,7 @@ export default function Page() {
 
       setLoading(true);
       try {
+        console.log(config)
       const response = await axios.get(`http://localhost:8080/exam/getexams/${examid}`, config);
         const data = response.data;
         setExams(data);
