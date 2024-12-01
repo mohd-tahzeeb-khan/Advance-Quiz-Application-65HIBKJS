@@ -8,7 +8,7 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMyOTg5NjA0LCJleHAiOjE3MzI5OTMyMDR9.6hExcXbeUXS4rbc0NK94QSSnca6zRkHt51Uy8NI-Ugw";
+  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDUzMTY5LCJleHAiOjE3MzMwNTY3Njl9.0kYkfwDaZt2AFJeEVTnMFwxy_zKWKd9plReoeQjF1fA";
   const { examid } = useParams();  // Get examid from URL params
   console.log('Exam ID:', examid);
 
