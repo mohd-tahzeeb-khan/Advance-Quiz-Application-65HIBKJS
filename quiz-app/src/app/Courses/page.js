@@ -1,65 +1,47 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import { useState, useEffect } from "react";
+import Link from "next/link";
 
-import axios from 'axios';
-import { useRouter } from 'next/router';
-import { useParams } from 'next/navigation';
+const Courses = () => {
+  const [courses, setCourses] = useState([]);
 
-const page = () => {
-  const router=useParams();
-    const [courses, setCourses] = useState([]);
-    const [exam, setexam] = useState([])
-    useEffect(() => {
-      axios.get("http://localhost:8080/course/getall").then((data)=>{
-        setCourses(data?.data);
-        //setexam(data[0].exams)
-      })
-    }, [])
-    
-  
-      const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEEAD', '#D4A5A5', '#9B59B6', '#3498DB'];
-        
-      const handleCardClick = (id) => {
-        if(id!=null){
+  // Mock data or you can fetch data from API
+  useEffect(() => {
+    // Simulating fetching course data
+    const fetchCourses = async () => {
+      const data = [
+        { id: 1, title: "JavaScript for Beginners", description: "Learn the basics of JavaScript" },
+        { id: 2, title: "React Fundamentals", description: "Master React for building modern web applications" },
+        { id: 3, title: "Full Stack Web Development", description: "Become a full-stack developer" },
+        { id: 4, title: "Advanced Node.js", description: "Deep dive into Node.js and backend development" },
+      ];
+      setCourses(data);
+    };
 
-            router.push(`/Exams/${id}`);
-        }else{
-            console.log(id)
-        }
-      };
+    fetchCourses();
+  }, []);
+
   return (
-    <>
-    
-    
-
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-  {courses.map((course, index) => (
-    <div
-      key={course.id}
-      className="rounded-lg shadow-lg overflow-hidden cursor-pointer transform transition-transform hover:scale-105"
-      style={{
-        backgroundColor: colors[index % colors.length],
-      }}
-    >
-      <div className="p-4">
-        {/* Accessing the first exam's exam_id (example: if you only need the first one) */}
-        {course.exams.length > 0 && (
-          <h2
-            onClick={() => handleCardClick(course.exams[0].exam_id)} // Accessing the first exam's ID
-            className="text-xl font-bold text-white mb-2"
-          >
-            {course.name}
-          </h2>
-        )}
-        <p className="text-white opacity-90">{course.category}</p>
+    <div className="min-h-screen bg-gray-100 py-10">
+      <div className="max-w-screen-xl mx-auto px-4">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-8">Available Courses</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {courses.map((course) => (
+            <div
+              key={course.id}
+              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
+            >
+              <h2 className="text-2xl font-semibold text-gray-800">{course.title}</h2>
+              <p className="text-gray-600 mt-2">{course.description}</p>
+              <Link className="text-blue-500 mt-4 inline-block hover:underline" href={`/courses/${course.id}`}>
+                View Details
+              </Link>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
-  ))}
-</div>
+  );
+};
 
-    
-    </>
-  )
-}
-
-export default page
+export default Courses;
