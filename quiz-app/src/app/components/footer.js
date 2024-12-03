@@ -75,7 +75,7 @@ import Github from '../../../public/icons/github.png'
 
 const footer = () => {
   return (
-    <footer className="bg-blue-600 text-white py-6">
+    <footer className="bg-blue-600 text-white py-6 border-t-2 border-t-white">
       <div className="container mx-auto px-4">
         {/* Top Section */}
         <div className="md:flex justify-between items-start space-y-6 md:space-y-0">
@@ -99,7 +99,7 @@ const footer = () => {
                 <a href="/about" className="hover:text-gray-300">About</a>
               </li>
               <li>
-                <a href="/quizzes" className="hover:text-gray-300">Quizzes</a>
+                <a href="/Courses" className="hover:text-gray-300">Quizzes</a>
               </li>
               <li>
                 <a href="/contact" className="hover:text-gray-300">Contact</a>
@@ -108,10 +108,10 @@ const footer = () => {
           </div>
           <div className='flex flex-col'>
             <div className='flex flex-col gap-3 justify-center'>
-            <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2 hover:text-black" href="/login">
+            <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2 hover:text-black" href="/Auth/user-login">
              Login
             </Link>
-            <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-green-600" href="/signup">
+            <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-green-600" href="/Auth/user-signup">
              Sign Up
             </Link>
           </div>
@@ -121,8 +121,9 @@ const footer = () => {
             <h3 className="text-lg font-bold mb-2">Developed By</h3>
             <p>
               <strong>Mohammad Tahzeeb Khan</strong><br />
-              Full Stack Java Developer Intern at <a href="https://innobyte.com" className="text-gray-300 hover:underline">Inno Bytes Services Ltd.</a><br />
-              Currently pursuing MBA-HR & Finance.
+              Diploma(CSE) | Btech(CSE) | MBA(HR/FM)<br />
+              Full Stack Java Developer Intern at <a href="https://www.innobyteservices.com/" className="text-gray-300 hover:underline">Inno Bytes Services Ltd.</a><br />
+              
             </p>
             <p className="mt-2">
               Connect with me on:
