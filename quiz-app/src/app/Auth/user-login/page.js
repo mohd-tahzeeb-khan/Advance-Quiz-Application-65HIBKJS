@@ -1,20 +1,42 @@
 // pages/login.js
 'use client'
 import React, { useState } from 'react';
-//import { cookies } from 'next/headers';
-import Cookies from 'js-cookie';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { useRouter } from 'next/navigation';
+
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const router=useRouter();
 
-  const handleLogin = (e) => {
+  
+  const handleLogin =async (e) => {
+   
     e.preventDefault();
+    
     console.log('Logging in with:', email, password);
-  };
-  // const store_Data=(token)={
-  //   document.Cookies=`token=${token}; path=/; HttpOnly; Secure; SameSite=Strict`
-  // };
+    try{
+      const data=await axios.post("http://localhost:8080/auth/login/user",{
+        email,
+        password
+      });
+      
+      const token=data.data;
+      localStorage.setItem("jwtToken", token);
+      // console.log(data);
+      const decodejwt=jwtDecode(localStorage.getItem("jwtToken"));
+      const expirationTime = new Date((decodejwt.iat + 3600) * 1000);
+      console.log("decoded: ", expirationTime);
+      router.push("/Dashboard/user");
+    }catch(err){
+      console.log("error", err);
 
+    }
+    
+  };
+
+  
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
@@ -67,7 +89,7 @@ const LoginPage = () => {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Don’t have an account?{' '}
-            <a href="/signup" className="text-indigo-600 hover:text-indigo-700 font-semibold">
+            <a href="/Auth/user-signup" className="text-indigo-600 hover:text-indigo-700 font-semibold">
               Sign up
             </a>
           </p>
