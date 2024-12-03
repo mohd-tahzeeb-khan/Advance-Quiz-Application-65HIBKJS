@@ -59,7 +59,7 @@ public class JwtUtil {
     public Boolean validateToken(String token){
         return !isTokenExpired(token);
     }
-    private Boolean isTokenExpired(String token){
+    public Boolean isTokenExpired(String token){
         return extractExpiration(token).before(new Date());
     }
 }
