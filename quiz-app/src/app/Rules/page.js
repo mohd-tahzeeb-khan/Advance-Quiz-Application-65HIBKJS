@@ -20,8 +20,8 @@ export default function RulesPage() {
   };
 
   return (
-    <div className='h-full w-full'>
-    <div className="rules-page-container text-black mx-auto">
+    <div className='h-[100vh] w-full mt-[10%] '>
+    <div className="rules-page-container text-black ">
       <h1 className="text-center text-xl font-bold mb-4">Exam Rules</h1>
 
       <div className="rules-content mb-6">
