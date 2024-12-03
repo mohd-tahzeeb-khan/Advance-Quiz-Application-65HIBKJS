@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import axios from "axios";
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -9,13 +10,14 @@ const Courses = () => {
   useEffect(() => {
     // Simulating fetching course data
     const fetchCourses = async () => {
-      const data = [
-        { id: 1, title: "JavaScript for Beginners", description: "Learn the basics of JavaScript" },
-        { id: 2, title: "React Fundamentals", description: "Master React for building modern web applications" },
-        { id: 3, title: "Full Stack Web Development", description: "Become a full-stack developer" },
-        { id: 4, title: "Advanced Node.js", description: "Deep dive into Node.js and backend development" },
-      ];
-      setCourses(data);
+      try{
+        const data=await axios.get("http://localhost:8080/course/getall")
+      setCourses(data.data);
+      console.log(data.data);
+      }catch(err){
+        console.log(err);
+      }
+      
     };
 
     fetchCourses();
@@ -31,9 +33,9 @@ const Courses = () => {
               key={course.id}
               className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
             >
-              <h2 className="text-2xl font-semibold text-gray-800">{course.title}</h2>
-              <p className="text-gray-600 mt-2">{course.description}</p>
-              <Link className="text-blue-500 mt-4 inline-block hover:underline" href={`/courses/${course.id}`}>
+              <h2 className="text-2xl font-semibold text-gray-800">{course.name}</h2>
+              <p className="text-gray-600 mt-2">{course.category}</p>
+              <Link className="text-extradarkblue mt-4 inline-block hover:underline" href={`/Courses/${course.id}`}>
                 View Details
               </Link>
             </div>
