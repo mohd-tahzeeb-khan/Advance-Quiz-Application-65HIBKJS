@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import { useParams } from "next/navigation";
 
+import { useRouter } from "next/navigation";
+
+
 export default function Page() {
   const [Exams, setExams] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDgxNTM2LCJleHAiOjE3MzMwODUxMzZ9._kfqusNjpfRZqa6oTwwbpXuCjYWPhonv59xM6_Iizyg";
+  // const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDgxNTM2LCJleHAiOjE3MzMwODUxMzZ9._kfqusNjpfRZqa6oTwwbpXuCjYWPhonv59xM6_Iizyg";
   const { examid } = useParams();  // Get examid from URL params
   console.log('Exam ID:', examid);
-
+  const router=useRouter();
   useEffect(() => {
     if (!examid) {
       // If no examid is available, you might want to handle this case
@@ -30,7 +32,7 @@ export default function Page() {
     const fetchData = async () => {
       const config = {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
           "Content-Type":"application/json",
         },
         //withCredentials:true,
@@ -64,6 +66,43 @@ export default function Page() {
       <div className="flex">Marks: <h3>{Exams.total_marks}</h3></div>
       <div className="flex">Description: <h3>{Exams.description}</h3></div>
       <div className="flex">Creator: <h3>{Exams.creator}</h3></div>
+
+
+
+
+
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-3xl w-full">
+        <h1 className="text-3xl font-bold text-gray-800">Exams: {Exams.title}</h1>
+        <p className="text-gray-600 mt-4">{Exams.description}</p>
+        <div className="mt-6">
+          <div className="flex justify-between items-center">
+            <p className="text-gray-800 text-lg">
+              Total Marks: <span className="font-semibold">{Exams.total_marks}</span>
+            </p>
+            <p className="text-gray-800 text-lg">
+              Duration: <span className="font-semibold">{Exams.duration} minutes</span>
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={() => router.push(`/Rules`)}
+          className="mt-8 w-full bg-darkblue text-black py-3 rounded-lg hover:bg-blue-600 transition-all"
+        >
+          Start Exam
+        </button>
+      </div>
     </div>
+
+
+
+
+
+
+    </div>
+
+
+
+
   );
 }
