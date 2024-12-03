@@ -57,13 +57,18 @@ export default function Home() {
       {/* Call to Action Section */}
       <section className="bg-blue-600 text-white py-16">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Create Test?</h2>
           <p className="mb-6">
-            Sign up today and take your quiz experience to the next level.
+            Sign up today and Create your quiz experience to the next level.
           </p>
-          <Link className="bg-white text-blue-600 px-6 py-3 rounded hover:bg-gray-100 font-medium" href="/signup">
+          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-login">
             
               Sign Up Now
+           
+          </Link>
+          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-signup">
+            
+              Sign In Now
            
           </Link>
         </div>
