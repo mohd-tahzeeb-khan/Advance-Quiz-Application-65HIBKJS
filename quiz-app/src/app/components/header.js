@@ -6,7 +6,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-600 shadow-lg">
+    <nav className="bg-blue-600 shadow-lg h-16 border-b-2 border-b-white border-t-2 border-t-white pt-2">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         {/* Logo */}
         <div className="text-white text-xl font-bold">
@@ -23,21 +23,21 @@ const Navbar = () => {
           <Link className="text-white hover:text-gray-300" href="/about">
             About
           </Link>
-          <Link className="text-white hover:text-gray-300" href="/quizzes">
+          <Link className="text-white hover:text-gray-300" href="/Courses">
             Quizzes
           </Link>
           <Link className="text-white hover:text-gray-300" href="/contact">
             Contact
           </Link>
-          <div>
-            <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/login">
+          
+        </div><div>
+            <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
              Login
             </Link>
-            <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/signup">
+            <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
              Sign Up
             </Link>
           </div>
-        </div>
 
         {/* Hamburger Icon (Mobile) */}
         <button
@@ -78,10 +78,10 @@ const Navbar = () => {
               Contact
             </Link>
             <div>
-              <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/login">
+              <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
                 Login
               </Link>
-              <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/signup">
+              <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
                Sign Up
               </Link>
             </div>
