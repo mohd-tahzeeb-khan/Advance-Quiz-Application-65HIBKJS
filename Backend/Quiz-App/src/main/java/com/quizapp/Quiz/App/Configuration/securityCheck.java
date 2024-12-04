@@ -43,7 +43,7 @@ public class securityCheck {
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**", "/course/**",  "/mcquestion/**").permitAll()
                         .requestMatchers( "/user/**", "/exam/**").authenticated()
-                        .requestMatchers("/examiner/**").hasRole("examiner")
+                        //.requestMatchers("/examiner/**").hasRole("examiner")
                         .anyRequest().authenticated()
 
                 )
