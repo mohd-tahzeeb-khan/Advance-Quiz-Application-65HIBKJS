@@ -4,10 +4,12 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 import { useRouter } from 'next/navigation';
+import { useData } from '@/app/context/dataContext';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const {setdataoncontext}=useData();
   const router=useRouter();
 
   
@@ -28,6 +30,10 @@ const LoginPage = () => {
       const decodejwt=jwtDecode(localStorage.getItem("jwtToken"));
       const expirationTime = new Date((decodejwt.iat + 3600) * 1000);
       console.log("decoded: ", expirationTime);
+      setdataoncontext({
+        login:true,
+        email:email,
+      })
       router.push("/Dashboard/user");
     }catch(err){
       console.log("error", err);
