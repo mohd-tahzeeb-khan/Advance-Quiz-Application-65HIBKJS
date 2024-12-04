@@ -1,4 +1,5 @@
 'use client'
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddQuestionsPage = () => {
@@ -43,7 +44,25 @@ const AddQuestionsPage = () => {
   };
 
   // Submit questions
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        "Content-Type":"application/json",
+      },
+      //withCredentials:true,
+    };
+    try {
+      const response = await axios.post(`http://localhost:8080/mcquestion/savedata`, {
+        mcq:questions
+      },
+        config
+      );
+      console.log(response.data); // Handle the response
+    } catch (err) {
+      console.log(err.message); // Handle the error
+    }
     console.log("Submitted Questions:", questions);
     // You can send `questions` to your backend API
   };
