@@ -105,6 +105,18 @@ public class Exams {
         int port = request.getServerPort();
         return "Request received on port: " + port;
     }
+    @PostMapping("/addmcqtoexam/{examid}/{mcqid}")
+    public String addmcqextions(@PathVariable int examid, @PathVariable int mcqid) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        if(getloginservice.getAuth(email)){
+            String abc =examservice.addmcqtoexams(examid, mcqid);
+            return "done";
+        }
+        else{
+            return "Wrong";
+        }
+    }
 
     @RequestMapping(method = RequestMethod.OPTIONS)
     public ResponseEntity<Void> handleOptions() {
