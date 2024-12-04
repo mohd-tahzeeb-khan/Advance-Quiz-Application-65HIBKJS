@@ -1,14 +1,37 @@
 // pages/login.js
 'use client'
+import axios from 'axios';
+import { useRouter } from 'next/navigation';
+import { jwtDecode } from 'jwt-decode';
+import { useData } from '@/app/context/dataContext';
 import React, { useState } from 'react';
-
 const LoginPage = () => {
   const [email, setEmail] = useState('');
+  const {setdataoncontext}=useData();
   const [password, setPassword] = useState('');
-
-  const handleLogin = (e) => {
+  const router=useRouter();
+  const handleLogin =async (e) => {
     e.preventDefault();
     console.log('Logging in with:', email, password);
+    try{
+      const data=await axios.post("http://localhost:8080/auth/login/examiner",{
+        email,
+        password
+      });
+      
+      const token=data.data;
+      localStorage.setItem("jwtToken", token);
+      // console.log(data);
+      const decodejwt=jwtDecode(localStorage.getItem("jwtToken"));
+      setdataoncontext({
+        login:true,
+        email:email,
+      })
+      router.push("/Dashboard/examiner");
+    }catch(err){
+      console.log("error", err);
+    }
+    
   };
 
   return (
