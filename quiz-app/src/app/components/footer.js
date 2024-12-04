@@ -75,7 +75,7 @@ import Github from '../../../public/icons/github.png'
 
 const footer = () => {
   return (
-    <footer className="bg-blue-600 text-white py-6 border-t-2 border-t-white">
+    <footer className="bg-slate-700 text-white py-6 border-t-2 border-t-white">
       <div className="container mx-auto px-4">
         {/* Top Section */}
         <div className="md:flex justify-between items-start space-y-6 md:space-y-0">
