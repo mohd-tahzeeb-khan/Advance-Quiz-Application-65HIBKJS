@@ -54,6 +54,55 @@ const ExaminerDashboard = () => {
           <p className="text-gray-600">Email: {examiner.email}</p>
         </div>
 
+        {/* Total Courses and Options */}
+        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800">Manage your Courses</h2>
+        <div className="w-full flex justify-between px-10">
+          <div>
+            <p className="text-gray-600 mt-2">Total Courses Created: {examiner.totalExams}</p>
+          </div>
+            {/* Create New Exam Button */}
+            <div className="mt-4">
+                <button
+                  onClick={handleCreateExam}
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                >
+                 Create New Course
+                </button>
+          </div>
+        </div>
+          
+
+          
+          <button
+                      onClick={() => handleAddQuestions(exam.id)}
+                      className="bg-green-500 text-white py-1 px-3 rounded-lg hover:bg-green-600"
+                    >
+                      New Courses
+                    </button>
+          {/* List of Existing Exams */}
+          <div className="mt-8">
+            <h3 className="text-xl font-semibold text-gray-700">Your Courses:</h3>
+            <ul className="mt-4 space-y-4">
+              {examiner.exams.map((exam) => (
+                <li key={exam.id} className="flex justify-between items-center">
+                  <span className="text-gray-800">{exam.name}</span>
+                  <div className="flex space-x-4">
+                    {/* Edit Exam Button */}
+                    <button
+                      onClick={() => handleAlterExam(exam.id)}
+                      className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                    >
+                      Delete Course
+                    </button>
+                    {/* Add Questions Button */}
+                    
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
         {/* Total Exams and Options */}
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-semibold text-gray-800">Exam Management</h2>
@@ -77,6 +126,13 @@ const ExaminerDashboard = () => {
                 <li key={exam.id} className="flex justify-between items-center">
                   <span className="text-gray-800">{exam.name}</span>
                   <div className="flex space-x-4">
+                    {/* Delete Exam Button */}
+                  <button
+                      onClick={() => handleAlterExam(exam.id)}
+                      className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                    >
+                      Delete Exam
+                    </button>
                     {/* Edit Exam Button */}
                     <button
                       onClick={() => handleAlterExam(exam.id)}
