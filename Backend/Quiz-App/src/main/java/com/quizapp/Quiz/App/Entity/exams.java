@@ -55,4 +55,8 @@ public class exams {
     @JsonIgnore
     @Nullable
     private course course;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "mcq_id", referencedColumnName = "id")
+    private mcq_handler mcq_handler;
 }
