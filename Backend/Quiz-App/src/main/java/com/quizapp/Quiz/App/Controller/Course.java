@@ -88,12 +88,14 @@ public class Course {
         if(getloginservice.getAuth(email)){
             if(id!=0){
                 course courseget=courseservice.getcourseById(id);
+                
                 if(courseget!=null){
                     return new ResponseEntity<>(courseget, HttpStatus.OK);
                 }else {
                     return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
                 }
-        }else{
+
+            }else{
                 return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
             }
         }
