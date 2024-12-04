@@ -3,10 +3,7 @@ package com.quizapp.Quiz.App.Services;
 import com.quizapp.Quiz.App.Controller.Course;
 import com.quizapp.Quiz.App.Controller.Result;
 import com.quizapp.Quiz.App.Controller.User;
-import com.quizapp.Quiz.App.Entity.course;
-import com.quizapp.Quiz.App.Entity.exams;
-import com.quizapp.Quiz.App.Entity.result;
-import com.quizapp.Quiz.App.Entity.user;
+import com.quizapp.Quiz.App.Entity.*;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +28,9 @@ public class examService {
 
     @Autowired
     private courseService courseservice;
+
+    @Autowired
+    private mcqService mcqservice;
 
 
     //Input Parameter id=>This is the Course id which is primary key in course. , email=>username(Email) is a primary key for the Examiner, examdata=>exam data.
@@ -85,6 +85,19 @@ public class examService {
         }else{
             return null;
         }
+    }
+
+    public  String addmcqtoexams(int examid, int mcqid){
+        exams exam=examsRepo.findById(examid).orElse(null);
+        mcq_handler mcqs=mcqservice.getdatabyid(mcqid).orElse(null);
+
+        if(exam==null && mcqs==null){
+            return "No Exam found";
+        }else{
+            exam.setMcq_handler(mcqs);
+            examsRepo.save(exam);
+        }
+        return "ander hi nhi gaya";
     }
     }
 
