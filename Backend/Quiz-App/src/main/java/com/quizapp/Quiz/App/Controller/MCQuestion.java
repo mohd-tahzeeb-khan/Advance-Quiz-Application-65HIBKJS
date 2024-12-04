@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("mcquestion")
@@ -68,4 +67,50 @@ public class MCQuestion {
         Optional<mcq_handler> mcq = mcqservice.getdatabyid(id);
         return new ResponseEntity<>(mcq, HttpStatus.OK);
     }
+
+    @PostMapping("/savedata")
+    public void  savedata(@RequestBody Map<String, Object> payload) {
+        Object payloadarray = payload.get("mcq");
+        System.out.println(payloadarray);
+        if (payloadarray instanceof List<?>) {
+            // Safely cast to a List
+            List<?> mcqList = (List<?>) payloadarray;
+
+            // Iterate through the list
+            for (Object item : mcqList) {
+                if (item instanceof Map<?, ?>) {
+                    // Cast each item to a Map
+                    Map<String, Object> mcqItem = (Map<String, Object>) item;
+
+                    // Extract individual fields
+                    Object id = mcqItem.get("id");
+                    Object question = mcqItem.get("question");
+                    Object statement = mcqItem.get("statement");
+                    Object code = mcqItem.get("code");
+                    Object options = mcqItem.get("options"); // Likely a list
+                    Object correctAnswer = mcqItem.get("correctAnswer");
+                    System.out.println(id);
+                    System.out.println(question);
+                    System.out.println(statement);
+                    System.out.println(code);
+                    System.out.println(options);
+                    System.out.println(correctAnswer);
+                    questions questionsdata = new questions();
+                    questionsdata.setQuestion((String) question);
+                    questionsdata.setOptions((List<String>) options);
+                    questionsdata.setAnswer((String) correctAnswer);
+                    questionservice.addquestions(1, questionsdata);
+
+
+
+    }}}}
+//        for (Map<String, Object> entry : payload.get("mcq")) {
+//            Long id = (Long) entry.get("id"); // Extract ID
+//            String question = (String) entry.get("question"); // Extract question
+//            String statement = (String) entry.get("statement"); // Extract statement
+//            String code = (String) entry.get("code"); // Extract code
+//            List<String> options = (List<String>) entry.get("options"); // Extract options
+//            String correctAnswer = (String) entry.get("correctAnswer");
+//
+//        }
 }
