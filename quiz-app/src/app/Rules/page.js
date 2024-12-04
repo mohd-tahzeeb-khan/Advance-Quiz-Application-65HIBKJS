@@ -1,13 +1,19 @@
 'use client'
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useData } from '../context/dataContext';
 
 export default function RulesPage() {
   const [isAgreed, setIsAgreed] = useState(false);
   const router = useRouter();
-
+  const { dataoncontext }=useData();
+  const {setdataoncontext}=useData();
   // Function to handle agreement
   const handleAgree = () => {
+    setdataoncontext((prevdataoncontext)=>({
+      ...prevdataoncontext,
+      rules:true,
+  }))
     setIsAgreed(true);
   };
 
@@ -15,7 +21,7 @@ export default function RulesPage() {
   const handleStartExam = () => {
     if (isAgreed) {
       // Redirect to the exam page, replace with the actual exam page URL
-      router.push('/exam');
+      router.push('/mcQuestions');
     }
   };
 
@@ -32,6 +38,7 @@ export default function RulesPage() {
           <li>4. No cheating or plagiarism is allowed.</li>
           <li>5. Ensure your internet connection is stable before starting.</li>
           <li>6. Follow the instructions given during the exam.</li>
+          <li>{dataoncontext.examid}</li>
         </ul>
       </div>
 
