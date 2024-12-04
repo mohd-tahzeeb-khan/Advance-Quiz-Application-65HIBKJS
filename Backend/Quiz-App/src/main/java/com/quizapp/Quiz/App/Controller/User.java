@@ -8,6 +8,8 @@ import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +22,17 @@ public class User {
     private userService userservice;
 
 
-@GetMapping("/getbyemail/{email}")
-public ResponseEntity<user> getbyemail(@PathVariable String email) {
-    return new ResponseEntity<>(userservice.Getuser(email), HttpStatus.OK);
+@GetMapping("/getuser")
+public ResponseEntity<user> getbyemail() {
+    Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+    String email=authentication.getName();
+    if(email!=null){
+        user userdata=userservice.Getuser(email);
+        return new ResponseEntity<>(userdata, HttpStatus.OK);
+    }
+    else{
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    }
 
 }
 
