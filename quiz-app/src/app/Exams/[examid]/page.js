@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useParams } from "next/navigation";
 
 import { useRouter } from "next/navigation";
+import { useData } from "@/app/context/dataContext";
+// import { evalManifestWithRetries } from "next/dist/server/load-components";
 
 
 export default function Page() {
@@ -12,9 +14,14 @@ export default function Page() {
   const [error, setError] = useState(null);
   // const token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJndWRkdXJhYWpAZ21haWwuY29tIiwiaWF0IjoxNzMzMDgxNTM2LCJleHAiOjE3MzMwODUxMzZ9._kfqusNjpfRZqa6oTwwbpXuCjYWPhonv59xM6_Iizyg";
   const { examid } = useParams();  // Get examid from URL params
-  console.log('Exam ID:', examid);
+  // console.log('Exam ID:', examid);
   const router=useRouter();
+  const { setdataoncontext }=useData();
+  const { dataoncontext}=useData();
+  
+
   useEffect(() => {
+    
     if (!examid) {
       // If no examid is available, you might want to handle this case
       setError("Exam ID is missing.");
@@ -29,6 +36,9 @@ export default function Page() {
       return;
     }
 
+
+
+
     const fetchData = async () => {
       const config = {
         headers: {
@@ -40,11 +50,16 @@ export default function Page() {
 
       setLoading(true);
       try {
-        console.log(config)
+        //console.log(config)
       const response = await axios.get(`http://localhost:8080/exam/getexams/${examid}`, config);
         const data = response.data;
         setExams(data);
         console.log("Fetched exams:", data);
+        setdataoncontext((prevdataoncontext)=>({
+          ...prevdataoncontext,
+          examid:examid,
+      }))
+        
         setLoading(false);
       } catch (error) {
         setError(error.message || "An error occurred");
@@ -58,16 +73,14 @@ export default function Page() {
   if (loading) return <p>Loading exams...</p>;
   if (error) return <p>{error}</p>;
   if (!Exams) return <p>No exams found</p>;
+  if(dataoncontext.login!=true){
+    router.push("/Auth/user-login");
+  }else{
 
+  
   return (
     <div>
-      <h2>Exam Details</h2>
-      <div className="flex">Title: <h3>{Exams.title}</h3></div>
-      <div className="flex">Marks: <h3>{Exams.total_marks}</h3></div>
-      <div className="flex">Description: <h3>{Exams.description}</h3></div>
-      <div className="flex">Creator: <h3>{Exams.creator}</h3></div>
-
-
+    
 
 
 
@@ -105,4 +118,5 @@ export default function Page() {
 
 
   );
+}
 }
