@@ -1,12 +1,14 @@
 'use client'
 import React, { useState } from "react";
 import Link from "next/link";
+import { useData } from "../context/dataContext";
+
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { dataoncontext }=useData();
   return (
-    <nav className="bg-blue-600 shadow-lg h-16 border-b-2 border-b-white border-t-2 border-t-white pt-2">
+    <nav className="bg-slate-700 shadow-lg h-16 border-b-2 border-b-white border-t-2 border-t-white pt-2">
       <div className="container mx-auto px-4 py-2 flex justify-between items-center">
         {/* Logo */}
         <div className="text-white text-xl font-bold">
@@ -30,14 +32,16 @@ const Navbar = () => {
             Contact
           </Link>
           
-        </div><div>
-            <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
-             Login
-            </Link>
-            <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
-             Sign Up
-            </Link>
-          </div>
+        </div><div className="text-white">
+                <h3>{dataoncontext.email || <div>
+                <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
+                  Login
+                </Link>
+                <Link className="bg-green-700 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
+                 Sign Up
+                </Link>
+              </div> }</h3>
+              </div>
 
         {/* Hamburger Icon (Mobile) */}
         <button
@@ -78,10 +82,10 @@ const Navbar = () => {
               Contact
             </Link>
             <div>
-              <Link className="bg-white text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
+              <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
                 Login
               </Link>
-              <Link className="bg-gray-100 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
+              <Link className="bg-green-700 text-blue-600 px-4 py-2 rounded hover:bg-white" href="/Auth/user-signup">
                Sign Up
               </Link>
             </div>
@@ -90,6 +94,9 @@ const Navbar = () => {
       )}
     </nav>
   );
+    
+  
+  
 };
 
 export default Navbar;
