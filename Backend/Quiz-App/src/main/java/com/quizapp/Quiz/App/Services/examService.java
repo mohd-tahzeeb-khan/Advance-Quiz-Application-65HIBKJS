@@ -29,8 +29,13 @@ public class examService {
     @Autowired
     private courseService courseservice;
 
+
+    @Autowired
+    private examinerService examinerservice;
     @Autowired
     private mcqService mcqservice;
+    @Autowired
+    private com.quizapp.Quiz.App.Services.examinerService examinerService;
 
 
     //Input Parameter id=>This is the Course id which is primary key in course. , email=>username(Email) is a primary key for the Examiner, examdata=>exam data.
@@ -39,13 +44,13 @@ public class examService {
             if(courseservice.isExist(id) && userservice.isExist(email)){
                 Optional<course> getcourse=courseservice.getCourseById(id);
                 course course = getcourse.get();
-                user currentuser = userservice.Getuser(email);
-                    if(currentuser != null && course!=null){
+                examiner currentexaminer = examinerservice.getExaminer(email);
+                    if(currentexaminer != null && course!=null){
                         List<result> currentuserresult = resultservice.getuserresult(email);
                         examdata.setDateCreate(LocalDateTime.now());
                         examdata.setCreator(email);
-                        examdata.setUser(currentuser);
                         examdata.setCourse(course);
+                        examdata.setExaminer(currentexaminer);
                         return examsRepo.save(examdata);
                     }
 
@@ -94,7 +99,7 @@ public class examService {
         if(exam==null && mcqs==null){
             return "No Exam found";
         }else{
-            exam.setMcq_handler(mcqs);
+           // exam.setMcq_handler(mcqs);
             examsRepo.save(exam);
         }
         return "ander hi nhi gaya";

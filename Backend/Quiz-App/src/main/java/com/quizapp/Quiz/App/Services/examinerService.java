@@ -30,11 +30,19 @@ public class examinerService {
 
     public examiner getExaminer(@NotNull String email) {
             examiner examiner = examinerrepo.findByEmail(email);
-            System.out.println("herer  "+examiner);
             if(examiner == null) {
                 return null;
             }else{
                 return examiner;
             }
+    }
+    public boolean isExistsExaminer(@NotNull String email) {
+        examiner examiner = examinerrepo.findByEmail(email);
+        if(examiner == null) {
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 }

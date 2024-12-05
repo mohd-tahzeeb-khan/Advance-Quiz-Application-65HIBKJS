@@ -55,5 +55,28 @@ public class resultService {
         return true;
     }
 
+//    public void checkAnswers(List<String> userAnswers) {
+//        // Fetch correct answers from the repository (assuming it's a List of Strings)
+//        List<String> correctAnswers = getCorrectAnswersFromRepository();
+//
+//        // Counters for correct and wrong answers
+//        int correct = 0;
+//        int wrong = 0;
+//
+//        // Check the answers
+//        for (int i = 0; i < userAnswers.size(); i++) {
+//            // Compare each answer
+//            if (userAnswers.get(i).equals(correctAnswers.get(i))) {
+//                correct++; // Increment correct counter
+//            } else {
+//                wrong++; // Increment wrong counter
+//            }
+//        }
+//
+//        // Output the results
+//        System.out.println("Correct: " + correct);
+//        System.out.println("Wrong: " + wrong);
+//    }
+
 
 }
