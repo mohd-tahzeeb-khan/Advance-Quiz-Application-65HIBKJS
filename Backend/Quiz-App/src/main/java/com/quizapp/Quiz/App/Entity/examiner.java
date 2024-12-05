@@ -52,8 +52,9 @@ public class examiner {
     //
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<exams> exams = new ArrayList<>();
-//    @Column(nullable = false)
-//    @OneToMany(mappedBy = "exam_id")
-//    private List<exams> exams=new ArrayList<>();
+   @Column(nullable = false)
+    @OneToMany(mappedBy = "examiner")
+    private List<exams> exams=new ArrayList<>();
+
 
 }

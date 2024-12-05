@@ -38,17 +38,18 @@ public class exams {
 
     @Column(nullable = false)
     private String expiredate;
-
+    @Column(nullable =false)
+    private int duration;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "result_id")
     @Nullable
     private result result;
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    @JsonIgnore
-    @Nullable
-    private user user;
+//    @ManyToOne
+//    @JoinColumn(name="user_id")
+//    @JsonIgnore
+//    @Nullable
+//    private user user;
 
     @ManyToOne
     @JoinColumn(name="course_id")
@@ -59,4 +60,10 @@ public class exams {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "mcq_id", referencedColumnName = "id")
     private mcq_handler mcq_handler;
+
+    @ManyToOne
+    @JoinColumn(name="examinerid")
+    @JsonIgnore
+    @Nullable
+    private examiner examiner;
 }
