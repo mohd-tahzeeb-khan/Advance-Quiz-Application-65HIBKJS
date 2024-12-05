@@ -2,6 +2,7 @@ package com.quizapp.Quiz.App.Configuration;
 
 
 import com.quizapp.Quiz.App.FIlter.jwtFilter;
+import com.quizapp.Quiz.App.Services.CustomUserDetailsService;
 import com.quizapp.Quiz.App.Services.loaduser;
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,8 @@ public class securityCheck {
 
     @Autowired
     private loaduser loaduserservice;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
 
     @Bean
@@ -69,7 +72,7 @@ public class securityCheck {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(loaduserservice).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(customUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
     @Bean
