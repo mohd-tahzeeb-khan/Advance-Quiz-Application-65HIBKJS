@@ -99,6 +99,7 @@ public class MCQuestion {
                     questionsdata.setQuestion((String) question);
                     questionsdata.setOptions((List<String>) options);
                     questionsdata.setAnswer((String) correctAnswer);
+                    mcqservice.addanswer((Integer) id, correctAnswer.toString());
                     questionservice.addquestions(1, questionsdata);
 
 

@@ -2,6 +2,7 @@ package com.quizapp.Quiz.App.Controller;
 
 import com.quizapp.Quiz.App.Entity.examiner;
 import com.quizapp.Quiz.App.Entity.user;
+import com.quizapp.Quiz.App.Services.CustomUserDetailsService;
 import com.quizapp.Quiz.App.Services.examinerService;
 import com.quizapp.Quiz.App.Services.userService;
 import com.quizapp.Quiz.App.Utilies.JwtUtil;
@@ -31,7 +32,7 @@ public class Authhandler {
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UserDetailsService userdetailsservice;
+    private CustomUserDetailsService customUserDetailsService;
     @Autowired
     private JwtUtil jwtUtil;
 // <--------------------------------------------------------------------------------------------------------------->
@@ -88,7 +89,7 @@ public class Authhandler {
     public ResponseEntity<?> loginUser(@RequestBody user user) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-            UserDetails userDetails= userdetailsservice.loadUserByUsername(user.getEmail());
+            UserDetails userDetails= customUserDetailsService.loadUserByUsername(user.getEmail());
             String jwt=jwtUtil.generateToken(user.getEmail());
             return new ResponseEntity<>(jwt,HttpStatus.OK);
         }catch (Exception e) {
@@ -101,7 +102,7 @@ public class Authhandler {
         try {
             System.out.println(examiner.getEmail() + " " + examiner.getPassword() );
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(examiner.getEmail(), examiner.getPassword()));
-            UserDetails userDetailsexam= userdetailsservice.loadUserByUsername(examiner.getEmail());
+            UserDetails userDetailsexam= customUserDetailsService.loadUserByUsername(examiner.getEmail());
             System.out.println(userDetailsexam);
             String jwt=jwtUtil.generateToken(examiner.getEmail());
             return new ResponseEntity<>(jwt,HttpStatus.OK);
@@ -114,7 +115,7 @@ public class Authhandler {
     public ResponseEntity<?> loginAuthOUser(@RequestBody user user) {
         try {
 //            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
-            UserDetails userDetails= userdetailsservice.loadUserByUsername(user.getEmail());
+            UserDetails userDetails= customUserDetailsService.loadUserByUsername(user.getEmail());
             String jwt=jwtUtil.generateToken(user.getEmail());
             return new ResponseEntity<>(jwt,HttpStatus.OK);
         }catch (Exception e) {

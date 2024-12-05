@@ -1,39 +1,66 @@
 package com.quizapp.Quiz.App.Controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quizapp.Quiz.App.Entity.course;
+import com.quizapp.Quiz.App.Entity.examiner;
 import com.quizapp.Quiz.App.Entity.exams;
+import com.quizapp.Quiz.App.Services.CustomUserDetailsService;
 import com.quizapp.Quiz.App.Services.courseService;
+import com.quizapp.Quiz.App.Services.examinerService;
 import com.quizapp.Quiz.App.Services.getloginService;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.eclipse.angus.mail.iap.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("course")
 //@CrossOrigin("localhost:3000")
-@CrossOrigin("http://localhost:3000")
+@CrossOrigin("http://localhost:4000")
 public class Course {
 
 
     @Autowired
     private getloginService getloginservice;
+//
+//    @Autowired
+//    private examiner examinerentity;
+
+    @Autowired
+    private examinerService examinerservice;
+    @Autowired
+    private AuthenticationManager authenticationManager;
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
     @Autowired
     private courseService courseservice;
+    @Autowired
+    private com.quizapp.Quiz.App.Services.examinerService examinerService;
+
     @PostMapping("/create")
-    public ResponseEntity<?> createCourse(@RequestBody course course) {
+    public ResponseEntity<?> createCourse(@RequestBody Map<String, Object> payload) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
-        if(getloginservice.getAuth(email)){
-            if(course!=null){
+        Object obj=payload.get("course");
+        System.out.println(obj);
+
+        if(examinerService.isExistsExaminer(email)){
+            if(obj!=null){
+
+                ObjectMapper mapper = new ObjectMapper();
+                course course = mapper.convertValue(obj, course.class);
                 courseservice.createCourse(course);
                 return new ResponseEntity<>("Course Created Successfully", HttpStatus.CREATED);
             }else{
