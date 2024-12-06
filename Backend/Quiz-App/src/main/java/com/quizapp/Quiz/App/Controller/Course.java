@@ -49,6 +49,22 @@ public class Course {
     @Autowired
     private com.quizapp.Quiz.App.Services.examinerService examinerService;
 
+
+    @PostMapping("/createPM")
+    public ResponseEntity<?> createCoursePM(@RequestBody course course) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        System.out.println(email);
+        boolean state=courseservice.createCourse(email,course);
+        if(state){
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+    }
+//    -----------------------------------------------------------------------------------------
     @PostMapping("/create")
     public ResponseEntity<?> createCourse(@RequestBody Map<String, Object> payload) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -61,7 +77,7 @@ public class Course {
 
                 ObjectMapper mapper = new ObjectMapper();
                 course course = mapper.convertValue(obj, course.class);
-                courseservice.createCourse(course);
+                //courseservice.createCourse(course);
                 return new ResponseEntity<>("Course Created Successfully", HttpStatus.CREATED);
             }else{
                 return new ResponseEntity<>("Course Creation Failed", HttpStatus.BAD_REQUEST);
@@ -72,6 +88,7 @@ public class Course {
 
     }
 // <------------------Add Exam into the Course by id ------------>
+//    This method will add the exam into the course. this method takes 1 pathvarible "id" the id is a unique for course.
     @PostMapping("/addExam/{id}")
     public ResponseEntity<?> addexam(@PathVariable int id,@RequestBody exams exam) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
@@ -97,15 +114,15 @@ public class Course {
 // <----------
     @GetMapping("/getall")
     public ResponseEntity<?> getAllCourse(){
-        return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
-//        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
-//        String email=authentication.getName();
-//        if(getloginservice.getAuth(email)){
-//            return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
-//        }else{
-//
-      //      return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
-//        }
+//        return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        if(getloginservice.getAuth(email)){
+            return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
+        }else{
+
+            return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
+        }
 
     }
     @GetMapping("/getbyid/{id}")
