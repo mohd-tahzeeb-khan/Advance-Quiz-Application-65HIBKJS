@@ -3,7 +3,9 @@ package com.quizapp.Quiz.App.Services;
 import java.util.ArrayList;
 import java.util.List;
 import com.quizapp.Quiz.App.Controller.Course;
+import com.quizapp.Quiz.App.Controller.Examiner;
 import com.quizapp.Quiz.App.Entity.course;
+import com.quizapp.Quiz.App.Entity.examiner;
 import com.quizapp.Quiz.App.Entity.exams;
 import com.quizapp.Quiz.App.Repository.courseRepo;
 import com.quizapp.Quiz.App.Repository.examsRepo;
@@ -30,15 +32,24 @@ public class courseService {
     private courseRepo courserepoinstance;
 
     @Autowired
+    private examinerService examinerservice;
+    @Autowired
     private examService examservice;
 
     exams exam1 = new exams();
 
-
-    public boolean createCourse(@NonNull course coursedata) {
-        courserepoinstance.save(coursedata);
-        return true;
+// this method take 2 parameters. 1. Email=email id of the examiner who is create the course, 2. Details of the Course
+    public boolean createCourse(@NonNull String email,@NonNull course coursedata) {
+        examiner examinerdata=examinerservice.getExaminer(email);
+        if(examinerdata==null) {
+            return false;
+        }else{
+            coursedata.setExaminer_course(examinerdata);
+            courserepoinstance.save(coursedata);
+            return true;
+        }
     }
+//    ------------------------------------------------------------------------------------------------------------
 
     public boolean addexamtocouse(@NonNull int id, @NonNull String username, @NonNull exams exams) {
         exams currentsaveexams=examservice.createExam(id, username, exams);
