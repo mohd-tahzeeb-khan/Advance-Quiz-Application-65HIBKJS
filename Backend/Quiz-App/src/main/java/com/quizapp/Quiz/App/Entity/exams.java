@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,19 +52,27 @@ public class exams {
 //    @Nullable
 //    private user user;
 
+
+    @ElementCollection
+    @Column(name = "answers")
+    private List<String> answers = new ArrayList<>();
+
     @ManyToOne
     @JoinColumn(name="course_id")
     @JsonIgnore
     @Nullable
     private course course;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "mcq_id", referencedColumnName = "id")
-    private mcq_handler mcq_handler;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "mcq_id", referencedColumnName = "id")
+//    private mcq_handler mcq_handler;
 
     @ManyToOne
-    @JoinColumn(name="examinerid")
+    @JoinColumn(name="examiner")
     @JsonIgnore
     @Nullable
-    private examiner examiner;
+    private examiner examiner_exams;
+
+    @OneToMany(mappedBy = "exams", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<questions> questions = new ArrayList<>();
 }
