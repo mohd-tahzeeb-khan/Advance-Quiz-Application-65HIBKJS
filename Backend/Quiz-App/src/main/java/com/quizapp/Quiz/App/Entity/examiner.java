@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name = "exminer")
+@Table(name = "examiner")
 public class examiner {
 
 
@@ -50,10 +50,12 @@ public class examiner {
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<result> result = new ArrayList<>();
     //
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<exams> exams = new ArrayList<>();
-   @Column(nullable = false)
-    @OneToMany(mappedBy = "examiner")
+    @OneToMany(mappedBy = "examiner_course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<course> course = new ArrayList<>();
+
+
+    @Column(nullable = false)
+    @OneToMany(mappedBy = "examiner_exams")
     private List<exams> exams=new ArrayList<>();
 
 
