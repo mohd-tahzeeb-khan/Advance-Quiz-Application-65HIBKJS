@@ -18,7 +18,6 @@ const LoginPage = () => {
         email,
         password
       });
-      
       const token=data.data;
       localStorage.setItem("jwtToken", token);
       // console.log(data);
