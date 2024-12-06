@@ -26,11 +26,12 @@ public class Examiner {
 
     @GetMapping("/getexaminer")
     public ResponseEntity<examiner> getExaminer() {
+        System.out.println("hello");
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
         System.out.println(email);
         examiner examiner=examinerservice.getExaminer(email);
-        System.out.println(examiner);
+//        System.out.println(examiner);
         if(examiner==null) {
             return null;
         }else{
