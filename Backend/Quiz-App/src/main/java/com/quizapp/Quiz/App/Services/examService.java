@@ -4,6 +4,7 @@ import com.quizapp.Quiz.App.Controller.Course;
 import com.quizapp.Quiz.App.Controller.Result;
 import com.quizapp.Quiz.App.Controller.User;
 import com.quizapp.Quiz.App.Entity.*;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class examService {
     @Autowired
     private examsRepo examsRepo;
     @Autowired
-    private userService userservice;
+    private examinerService examService;
 
     @Autowired
     private resultService resultservice;
@@ -39,18 +40,22 @@ public class examService {
 
 
     //Input Parameter id=>This is the Course id which is primary key in course. , email=>username(Email) is a primary key for the Examiner, examdata=>exam data.
+    @Transactional
     public exams createExam(int id, String email, exams examdata){
         if(examdata !=null) {
-            if(courseservice.isExist(id) && userservice.isExist(email)){
+            System.out.println(examdata);
+            if(courseservice.isExist(id) && examinerservice.isExistsExaminer(email)){
+                System.out.println("course exists..");
                 Optional<course> getcourse=courseservice.getCourseById(id);
                 course course = getcourse.get();
                 examiner currentexaminer = examinerservice.getExaminer(email);
                     if(currentexaminer != null && course!=null){
-                        List<result> currentuserresult = resultservice.getuserresult(email);
+                        System.out.println("currentexaminer exists..");
+                        //List<result> currentuserresult = resultservice.getuserresult(email);
                         examdata.setDateCreate(LocalDateTime.now());
                         examdata.setCreator(email);
                         examdata.setCourse(course);
-                        examdata.setExaminer(currentexaminer);
+                        examdata.setExaminer_exams(currentexaminer);
                         return examsRepo.save(examdata);
                     }
 
