@@ -9,11 +9,15 @@ public class getloginService {
 
     @Autowired
     private userService userservice;
+    @Autowired
+    private examinerService examinerservice;
     public boolean getAuth(String email) {
         if(userservice.isExist(email)){
             return true;
-        }
-        else{
+        } else if (examinerservice.isExistsExaminer(email)) {
+            return true;
+
+        } else{
             return false;
         }
     }
