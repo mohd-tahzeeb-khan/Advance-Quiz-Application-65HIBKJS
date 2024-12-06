@@ -1,5 +1,6 @@
 package com.quizapp.Quiz.App.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -30,5 +31,8 @@ public class course {
     private List<exams> exams = new ArrayList<>();
 
 
-
+    @ManyToOne
+    @JoinColumn(name = "examiner", nullable = false)
+    @JsonIgnore
+    private examiner examiner_course;
 }
