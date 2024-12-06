@@ -44,9 +44,9 @@ public class securityCheck {
 
         return http.authorizeHttpRequests(request -> request
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                        .requestMatchers("/auth/**", "/course/**",  "/mcquestion/**").permitAll()
-                        .requestMatchers( "/user/**", "/exam/**").authenticated()
-                        //.requestMatchers("/examiner/**").hasRole("examiner")
+                        .requestMatchers("/auth/**", "/course/**",  "/mcquestion/**", "/user/forgetpassword/**", "/user/forgetpassword/verify/**").permitAll()
+                        .requestMatchers( "/user/**", "/exam/**", "/examiner/**").authenticated()
+//                        .requestMatchers("/course/createPM").hasRole("Examiner")
                         .anyRequest().authenticated()
 
                 )
