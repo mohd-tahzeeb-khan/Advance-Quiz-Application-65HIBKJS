@@ -61,12 +61,12 @@ export default function Home() {
           <p className="mb-6">
             Sign up today and Create your quiz experience to the next level.
           </p>
-          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-login">
+          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-signup">
             
               Sign Up Now
            
           </Link>
-          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-signup">
+          <Link className="m-3 bg-white text-extradarkblue font-bold px-6 py-3 rounded hover:bg-gray-100" href="/Auth/examiner-login">
             
               Sign In Now
            
