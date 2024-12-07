@@ -23,10 +23,13 @@ public class mailsender {
 
     public void otpMail(String to, String subject, String body){
         SimpleMailMessage message=new SimpleMailMessage();
+
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);
         message.setFrom("quizapp");
+        System.out.println(message);
         mailSender.send(message);
+
     }
 }
