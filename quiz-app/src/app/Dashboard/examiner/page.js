@@ -1,9 +1,14 @@
 'use client'
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useData } from "@/app/context/dataContext";
+import axios from "axios";
 
 const ExaminerDashboard = () => {
-  // Static user data, replace with actual user data from an API
+  const router=useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [formData, setFormData] = useState({ name: "", category: "" });
+  const [error, setError] = useState("");
   const examinerData = {
     name: "Jane Smith",
     email: "janesmith@example.com",
@@ -18,13 +23,58 @@ const ExaminerDashboard = () => {
   };
 
   // State to handle examiner data
-  const [examiner, setExaminer] = useState(examinerData);
+  const [examiner,setExaminer] = useState({
+    name: "----",
+    email: "------",
+    mobile:"-----",
+    city:"------",
+    state:"-----",
+    zip:"------",
+    noofexams:"-------",
+    examsResults: [{
+      
+  },  
+  ]
+  })
+    const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-  const router = useRouter();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const configheader={
+      // jwttToken:localStorage.getItem("jwtToken"),
+      headers:{
+        Authorization:`Bearer ${localStorage.getItem('jwtToken')}`,
+        "Content-Type":"application/json"
+    },};
+    try {
+      // console.log("Payload:", JSON.stringify({ course: formData }, null, 2));
+      const response = await axios.post("http://localhost:8080/course/create",
+       {
+        course:formData
+       }, 
+       configheader
+      );
+      if (response.status === 201) {
+        setIsOpen(false); // Close the popup
+        setFormData({ name: "", category: "" }); // Clear the form
+        setError(""); // Clear any errors
+      }
+    } catch (err) {
+      setError("Failed to submit. Please try again.");
+    }
+  };
+
+  const handleClear = () => {
+    setFormData({ name: "", category: "" });
+    setError("");
+  };
 
   // Navigate to create new exam page
-  const handleCreateExam = () => {
-    router.push("/examiner/create-exam");
+  const handleCreateExam = (id) => {
+    router.push(`examiner/exams/${id}`);
   };
 
   // Navigate to alter an existing exam
@@ -36,11 +86,51 @@ const ExaminerDashboard = () => {
   const handleAddQuestions = (examId) => {
     router.push(`/examiner/add-questions/${examId}`);
   };
+  const handleaddCourses = () => {
+    router.push(`/Courses/insert`);
+  };
 
   useEffect(() => {
-    // In a real-world scenario, you would fetch this data from an API
-    setExaminer(examinerData);
-  }, []);
+    const fetchdata=async ()=>{
+  
+  
+      const configheader={
+        // jwttToken:localStorage.getItem("jwtToken"),
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem('jwtToken')}`,
+          "Content-Type":"application/json"
+      },};
+      try{
+        const userdataget=await axios.get(`http://localhost:8080/examiner/getexaminer`, configheader)
+        const data=userdataget.data;
+        console.log("data",data);
+        setExaminer({
+          name:data.name,
+          email:data.email,
+          mobile:data.mobile,
+          city:data.city,
+          zip:data.zip,
+          state:data.state,
+          
+        })
+        // const resultis={
+        //   examsResults:[{
+        //     exam:"tahzeeb",
+        //     score:55,
+        //   }
+            
+        //   ] 
+        // }
+        // setresults(resultis);
+        //console.log(results)
+        
+      }catch(Error ){
+        console.error(Error);
+  
+      }
+      };
+      fetchdata();
+  }, [])
 
   return (
     <div className="min-h-screen bg-gray-100 py-10">
@@ -52,6 +142,11 @@ const ExaminerDashboard = () => {
           <h2 className="text-2xl font-semibold text-gray-800">Personal Information</h2>
           <p className="text-gray-600 mt-2">Name: {examiner.name}</p>
           <p className="text-gray-600">Email: {examiner.email}</p>
+          <p className="text-gray-600 mt-2">Mobile: {examiner.mobile}</p>
+         
+          <p className="text-gray-600 mt-2">City: {examiner.city}</p>
+          <p className="text-gray-600">State: {examiner.zip}</p>
+         
         </div>
 
         {/* Total Courses and Options */}
@@ -75,20 +170,88 @@ const ExaminerDashboard = () => {
 
           
           <button
-                      onClick={() => handleAddQuestions(exam.id)}
+                      onClick={() => setIsOpen(true)}
                       className="bg-green-500 text-white py-1 px-3 rounded-lg hover:bg-green-600"
                     >
                       New Courses
                     </button>
+                    {/* POP for the New Course... */}
+                    {isOpen && (
+        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
+            <h2 className="text-lg font-bold mb-4">Submit Your Details</h2>
+            
+            <form onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-gray-700">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="category" className="block text-gray-700">
+                  Category
+                </label>
+                <input
+                  type="text"
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleInputChange}
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+                  required
+                />
+              </div>
+              {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+              <div className="flex justify-between">
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                >
+                  Clear
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute top-2 right-2 text-3xl  text-red-500 hover:text-red-700"
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
+      {/* ---------------------------- */}
           {/* List of Existing Exams */}
           <div className="mt-8">
             <h3 className="text-xl font-semibold text-gray-700">Your Courses:</h3>
             <ul className="mt-4 space-y-4">
-              {examiner.exams.map((exam) => (
+              {examinerData.exams.map((exam) => (
                 <li key={exam.id} className="flex justify-between items-center">
                   <span className="text-gray-800">{exam.name}</span>
                   <div className="flex space-x-4">
                     {/* Edit Exam Button */}
+                    <button
+                      onClick={() => handleCreateExam(exam.id)}
+                      className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                    >
+                      Create Exams
+                    </button>
                     <button
                       onClick={() => handleAlterExam(exam.id)}
                       className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
@@ -104,55 +267,7 @@ const ExaminerDashboard = () => {
           </div>
         </div>
         {/* Total Exams and Options */}
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-2xl font-semibold text-gray-800">Exam Management</h2>
-          <p className="text-gray-600 mt-2">Total Exams Created: {examiner.totalExams}</p>
-
-          {/* Create New Exam Button */}
-          <div className="mt-4">
-            <button
-              onClick={handleCreateExam}
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-            >
-              Create New Exam
-            </button>
-          </div>
-
-          {/* List of Existing Exams */}
-          <div className="mt-8">
-            <h3 className="text-xl font-semibold text-gray-700">Exams Created:</h3>
-            <ul className="mt-4 space-y-4">
-              {examiner.exams.map((exam) => (
-                <li key={exam.id} className="flex justify-between items-center">
-                  <span className="text-gray-800">{exam.name}</span>
-                  <div className="flex space-x-4">
-                    {/* Delete Exam Button */}
-                  <button
-                      onClick={() => handleAlterExam(exam.id)}
-                      className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
-                    >
-                      Delete Exam
-                    </button>
-                    {/* Edit Exam Button */}
-                    <button
-                      onClick={() => handleAlterExam(exam.id)}
-                      className="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600"
-                    >
-                      Edit Exam
-                    </button>
-                    {/* Add Questions Button */}
-                    <button
-                      onClick={() => handleAddQuestions(exam.id)}
-                      className="bg-green-500 text-white py-1 px-3 rounded-lg hover:bg-green-600"
-                    >
-                      Add Questions
-                    </button>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        
       </div>
     </div>
   );
