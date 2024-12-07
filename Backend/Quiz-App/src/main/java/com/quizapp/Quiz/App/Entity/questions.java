@@ -33,7 +33,7 @@ public class questions {
     private String answer;
 
     @ManyToOne
-    @JoinColumn(name = "mcq_id", nullable = false)
+    @JoinColumn(name = "exams", nullable = false)
     @JsonIgnore
-    private mcq_handler mcq_handler;
+    private exams exams;
 }
