@@ -61,6 +61,7 @@ public ResponseEntity<user> getbyemail() {
     public ResponseEntity<?> forgetpassword(@PathVariable String email) {
     if(email!=null) {
         int otp=userservice.forgetPasswordMailSender(email);
+
         return new ResponseEntity<>("OTP send, This is your "+otp, HttpStatus.OK);
     }else{
         return new ResponseEntity<>("email no found", HttpStatus.NOT_FOUND);
