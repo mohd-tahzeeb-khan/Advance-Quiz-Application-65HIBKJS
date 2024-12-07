@@ -67,6 +67,7 @@ public class Exams {
 
 
   }
+//  This method is used to Delete the Exam from Dataabse. Parameter: id-> id of the Exam
   @DeleteMapping("delete/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {
       Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
