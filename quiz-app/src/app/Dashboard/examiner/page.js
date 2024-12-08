@@ -9,6 +9,7 @@ const ExaminerDashboard = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [formData, setFormData] = useState({ name: "", category: "" });
   const [error, setError] = useState("");
+
   const examinerData = {
     name: "Jane Smith",
     email: "janesmith@example.com",
@@ -31,6 +32,7 @@ const ExaminerDashboard = () => {
     state:"-----",
     zip:"------",
     noofexams:"-------",
+    courses:[],
     examsResults: [{
       
   },  
@@ -111,8 +113,9 @@ const ExaminerDashboard = () => {
           city:data.city,
           zip:data.zip,
           state:data.state,
-          
+          courses:data.course,
         })
+       
         // const resultis={
         //   examsResults:[{
         //     exam:"tahzeeb",
@@ -241,19 +244,20 @@ const ExaminerDashboard = () => {
           <div className="mt-8">
             <h3 className="text-xl font-semibold text-gray-700">Your Courses:</h3>
             <ul className="mt-4 space-y-4">
-              {examinerData.exams.map((exam) => (
-                <li key={exam.id} className="flex justify-between items-center">
-                  <span className="text-gray-800">{exam.name}</span>
+              {examiner.courses.map((course) => (
+                <li key={course.id} className="flex justify-between items-center">
+                  <span className="text-gray-800 w-56">{course.name}</span>
+                  <span className="text-gray-800">{course.exams.length}</span>
                   <div className="flex space-x-4">
                     {/* Edit Exam Button */}
                     <button
-                      onClick={() => handleCreateExam(exam.id)}
+                      onClick={() => handleCreateExam(course.id)}
                       className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
                     >
                       Create Exams
                     </button>
                     <button
-                      onClick={() => handleAlterExam(exam.id)}
+                      onClick={() => handleAlterExam(course.id)}
                       className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
                     >
                       Delete Course
