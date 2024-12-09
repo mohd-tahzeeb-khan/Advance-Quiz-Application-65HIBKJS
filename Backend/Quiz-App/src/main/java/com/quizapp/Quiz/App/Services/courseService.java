@@ -103,4 +103,14 @@ public class courseService {
             return null;
         }
     }
+    public boolean deletebyid(int id) {
+        if(courserepoinstance.findById(id).isPresent()){
+            courserepoinstance.deleteById(id);
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
 }
