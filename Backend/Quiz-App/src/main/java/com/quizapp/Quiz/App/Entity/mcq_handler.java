@@ -21,16 +21,11 @@ public class mcq_handler {
     @Column(nullable = false)
     private String name;
 
-    @ElementCollection
-    @Column(name = "answers")
-    private List<String> answers = new ArrayList<>();
-
-
-
-    @OneToMany(mappedBy = "mcq_handler", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<questions> questions = new ArrayList<>();
-
-    @OneToOne(mappedBy = "mcq_handler", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private exams exams;
+//    @OneToMany(mappedBy = "mcq_handler", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<questions> questions = new ArrayList<>();
+//
+//    @OneToOne(mappedBy = "mcq_handler", cascade = CascadeType.ALL)
+//    @JsonIgnore
+//    private exams exams;
+//}
 }
