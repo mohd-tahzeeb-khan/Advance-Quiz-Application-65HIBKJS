@@ -71,10 +71,12 @@ public class userService {
 
     public int forgetPasswordMailSender(@NotNull String email){
         user gettinguser= userrepositoryinstance.findByEmail(email);
+        System.out.println(gettinguser);
         if(gettinguser != null) {
             String useremail=gettinguser.getEmail();
             String name=gettinguser.getName();
             int otp=randomnogenerateandcheck.generateRandomNumber();
+            System.out.println("OTP is"+otp);
             String Body="Hello"+name+", you requested as to Reset your existing password. To Reset your Existing password you" +
                     "have to enter this OTP(ONE TIME PASSWORD   " + otp +
                     "   *Remember* Do Not Share this OTP with Others";
