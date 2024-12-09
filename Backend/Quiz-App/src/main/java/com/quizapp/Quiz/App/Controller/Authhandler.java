@@ -11,10 +11,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
 
 
 @RestController
@@ -90,8 +93,15 @@ public class Authhandler {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword()));
             UserDetails userDetails= customUserDetailsService.loadUserByUsername(user.getEmail());
-            String jwt=jwtUtil.generateToken(user.getEmail());
-            return new ResponseEntity<>(jwt,HttpStatus.OK);
+            Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetails.getAuthorities();
+            boolean hasRoleUser = authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_USER"));
+            if(hasRoleUser) {
+                String jwt=jwtUtil.generateToken(user.getEmail());
+                return new ResponseEntity<>(jwt,HttpStatus.OK);
+            }else {
+                return new ResponseEntity<>("Error", HttpStatus.UNAUTHORIZED);
+            }
+
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
@@ -103,9 +113,16 @@ public class Authhandler {
             System.out.println(examiner.getEmail() + " " + examiner.getPassword() );
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(examiner.getEmail(), examiner.getPassword()));
             UserDetails userDetailsexam= customUserDetailsService.loadUserByUsername(examiner.getEmail());
-            System.out.println(userDetailsexam);
-            String jwt=jwtUtil.generateToken(examiner.getEmail());
-            return new ResponseEntity<>(jwt,HttpStatus.OK);
+            Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) userDetailsexam.getAuthorities();
+            boolean hasRoleUser = authorities.stream().anyMatch(authority -> authority.getAuthority().equals("ROLE_EXAMINER"));
+            if(hasRoleUser) {
+                String jwt=jwtUtil.generateToken(examiner.getEmail());
+                return new ResponseEntity<>(jwt,HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>("Email not Exists",HttpStatus.CONFLICT);
+            }
+
         }catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
         }
