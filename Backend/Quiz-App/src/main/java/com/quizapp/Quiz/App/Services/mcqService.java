@@ -1,8 +1,10 @@
 package com.quizapp.Quiz.App.Services;
 
 
+import com.quizapp.Quiz.App.Entity.exams;
 import com.quizapp.Quiz.App.Entity.mcq_handler;
 import com.quizapp.Quiz.App.Entity.questions;
+import com.quizapp.Quiz.App.Repository.examsRepo;
 import com.quizapp.Quiz.App.Repository.mcqRepo;
 import com.quizapp.Quiz.App.Repository.questionsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,8 @@ public class mcqService {
     @Autowired
     private questionsRepo questionsrepoinstance;
 
-
+    @Autowired
+    private examsRepo examsrepoinstance;
 
 
     public mcq_handler createmcq(mcq_handler mcq) {
@@ -29,12 +32,12 @@ public class mcqService {
         return responseback;
     }
 
-    public mcq_handler addanswer(int id, String answer) {
-        Optional<mcq_handler> getmcq=mcqrepoinstance.findById(id);
-        if (getmcq.isPresent()) {
-            mcq_handler mcq=getmcq.get();
-            mcq.getAnswers().add(answer);
-            return  mcqrepoinstance.save(mcq);
+    public exams addanswer(int id, String answer) {
+        Optional<exams> getexams=examsrepoinstance.findById(id);
+        if (getexams.isPresent()) {
+            exams exam=getexams.get();
+            exam.getAnswers().add(answer);
+            return  examsrepoinstance.save(exam);
 
         }
         return  null;
