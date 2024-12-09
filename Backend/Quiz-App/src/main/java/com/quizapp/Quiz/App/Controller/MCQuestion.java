@@ -22,6 +22,8 @@ public class MCQuestion {
 
     @Autowired
     private questionService questionservice;
+    @Autowired
+    private Exams exams;
 
     public MCQuestion(mcqService mcqservice) {
         this.mcqservice = mcqservice;
@@ -37,10 +39,10 @@ public class MCQuestion {
 // <---------This Mapping is used to add Questions in the Exam------------>
     @PostMapping("/addquestions/{id}")
     public  ResponseEntity<?> createMCQ(@PathVariable int id, @RequestBody questions questions) {
-        mcq_handler reutrned=mcqservice.addanswer(id, questions.getAnswer()); //Writing(Storing) Answers to the mcq_handler
+//         reutrned=mcqservice.addanswer(id, questions.getAnswer()); //Writing(Storing) Answers to the mcq_handler
         questions.setAnswer("");
         questionservice.addquestions(id, questions); ////Writing(Storing) Questions and Options to the question table
-        return new ResponseEntity(reutrned, HttpStatus.OK);
+        return new ResponseEntity("reutrned", HttpStatus.OK);
 
     }
 
