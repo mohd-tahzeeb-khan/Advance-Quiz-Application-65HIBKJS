@@ -117,12 +117,14 @@ public class Course {
 //        return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
-        if(getloginservice.getAuth(email)){
-            return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
-        }else{
-
-            return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
-        }
+        System.out.println(email);
+        return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
+//        if(getloginservice.getAuth(email)){
+//            return new ResponseEntity<>(courseservice.getallcouse(), HttpStatus.OK);
+//        }else{
+//
+//            return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
+//        }
 
     }
     @GetMapping("/getbyid/{id}")
@@ -144,5 +146,24 @@ public class Course {
             }
         }
         return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
+    }
+
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCourse(@PathVariable int id) {
+        Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
+        String email=authentication.getName();
+        if(getloginservice.getAuth(email)){
+            if(id!=0){
+                boolean status=courseservice.deletebyid(id);
+                return new ResponseEntity<>(status, HttpStatus.OK);
+            }
+            else{
+                return new ResponseEntity<>("Not Found", HttpStatus.NOT_FOUND);
+            }
+        }
+         else {
+            return new ResponseEntity<>("User Not Found", HttpStatus.UNAUTHORIZED);
+        }
     }
 }
