@@ -43,9 +43,7 @@ public class examService {
     @Transactional
     public exams createExam(int id, String email, exams examdata){
         if(examdata !=null) {
-            System.out.println(examdata);
             if(courseservice.isExist(id) && examinerservice.isExistsExaminer(email)){
-                System.out.println("course exists..");
                 Optional<course> getcourse=courseservice.getCourseById(id);
                 course course = getcourse.get();
                 examiner currentexaminer = examinerservice.getExaminer(email);
