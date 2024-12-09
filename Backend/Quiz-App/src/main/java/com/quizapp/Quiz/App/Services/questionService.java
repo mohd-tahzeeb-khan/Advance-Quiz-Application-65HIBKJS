@@ -28,7 +28,7 @@ public class questionService {
         Optional<mcq_handler> mcq_handler=mcqservice.getdatabyid(id);
         if(mcq_handler.isPresent()){
             mcq_handler mcq_handlerOptional=mcq_handler.get();
-            questions.setMcq_handler(mcq_handlerOptional);
+//            questions.setMcq_handler(mcq_handlerOptional);
             return questionrepoinstence.save(questions);
         }
         throw new RuntimeException("Please Enter the data properly."+id);
@@ -39,7 +39,7 @@ public class questionService {
         Optional<mcq_handler> mcq_handler=mcqservice.getdatabyid(id);
         if(mcq_handler.isPresent()){
             mcq_handler mcq_handlerOptional=mcq_handler.get();
-            questions.setMcq_handler(mcq_handlerOptional);
+//            questions.setMcq_handler(mcq_handlerOptional);
             return questionrepoinstence.save(questions);
         }
         throw new RuntimeException("Please Enter the data properly."+id);
