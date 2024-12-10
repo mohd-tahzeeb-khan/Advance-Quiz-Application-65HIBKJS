@@ -10,8 +10,14 @@ const Courses = () => {
   useEffect(() => {
     // Simulating fetching course data
     const fetchCourses = async () => {
+      const config={
+        headers:{
+          Authorization:`Bearer ${localStorage.getItem("jwtToken")}`,
+          "Content-Type":"application/json"
+        },
+      };
       try{
-        const data=await axios.get("http://localhost:8080/course/getall")
+        const data=await axios.get("http://localhost:8080/course/getall", config)
       setCourses(data.data);
       console.log(data.data);
       }catch(err){
