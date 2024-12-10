@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from "chart.js";
 import axios from "axios";
+import { useData } from '@/app/context/dataContext';
 
 // Register chart components
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -12,15 +13,16 @@ const Dashboard = () => {
   const userData = {
     
   };
+  const {setdataoncontext}=useData();
   const [userdata, setuserdata] = useState({
-    name: "John Doe",
-    email: "johndoe@example.com",
+    name: "",
+    email: "",
     totalExams: 5,
-    mobile:"-----",
-    city:"------",
-    state:"-----",
-    zip:"------",
-    noofexams:"-------",
+    mobile:"",
+    city:"",
+    state:"",
+    zip:"",
+    noofexams:"",
     examsResults: [{
       
   },  
@@ -53,7 +55,7 @@ useEffect(() => {
     try{
       const userdataget=await axios.get("http://localhost:8080/user/getuser", configheader)
       const data=userdataget.data;
-      console.log("data",data.exams);
+      console.log("data",data);
       setuserdata({
         name:data.name,
         email:data.email,
@@ -62,9 +64,14 @@ useEffect(() => {
         city:data.city,
         zip:data.zip,
         state:data.state,
-        noofexams:data.exams.length,
+        noofexams:65,
         examsResults:
           data.exams
+      });
+      setdataoncontext({
+        name:data.name,
+        login:true,
+        email:data.email,
       })
       // const resultis={
       //   examsResults:[{
@@ -74,9 +81,6 @@ useEffect(() => {
           
       //   ] 
       // }
-      // setresults(resultis);
-      //console.log(results)
-      console.log(userdata.exams.length);
     }catch(Error ){
       console.error(Error);
 
@@ -136,18 +140,18 @@ useEffect(() => {
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <h2 className="text-2xl font-semibold text-gray-800">Exam Results</h2>
           <p className="text-gray-600 mt-2">Total Exams Taken: {userdata.noofexams}</p>
-          <div className="mt-4">
+          {/* <div className="mt-4">
               {userdata.examsResults.map((exam) => (
               <div key={exam.exams_id} className="flex justify-between mb-2">
                <div className="w-[100%] flex justify-between border-2 border-black p-4">
-                <span className="text-gray-800">{exam.title}</span>
-                <span className="text-gray-600">{exam.description}</span>
-                <span className="text-gray-600">{exam.total_marks}%</span>
+                <span className="text-gray-800" key={exam.exams_id}>{exam.title}</span>
+                <span className="text-gray-600" key={exam.exams_id}>{exam.description}</span>
+                <span className="text-gray-600" key={exam.exams_id}>{exam.total_marks}%</span>
                </div>
                     
                
               </div>))}
-          </div>
+          </div> */}
         </div>
 
         {/* Progress Chart  */}
