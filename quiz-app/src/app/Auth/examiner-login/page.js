@@ -9,6 +9,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const {setdataoncontext}=useData();
   const [password, setPassword] = useState('');
+  const [Message, setMessage] = useState("");
   const router=useRouter();
   const handleLogin =async (e) => {
     e.preventDefault();
@@ -21,13 +22,14 @@ const LoginPage = () => {
       const token=data.data;
       localStorage.setItem("jwtToken", token);
       // console.log(data);
-      const decodejwt=jwtDecode(localStorage.getItem("jwtToken"));
+      //const decodejwt=jwtDecode(localStorage.getItem("jwtToken"));
       setdataoncontext({
         login:true,
         email:email,
       })
       router.push("/Dashboard/examiner");
     }catch(err){
+      setMessage("Login Failed! . Check you Credentials")
       console.log("error", err);
     }
     
@@ -37,6 +39,7 @@ const LoginPage = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">Login</h2>
+        <h3 className='text-red-600'>{Message}</h3>
         <form onSubmit={handleLogin} className="space-y-6">
           {/* Email Input */}
           <div>
