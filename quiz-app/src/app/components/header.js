@@ -33,7 +33,7 @@ const Navbar = () => {
           </Link>
           
         </div><div className="text-white">
-                <h3>{dataoncontext.email|| <div>
+                <h3>{dataoncontext.name|| <div>
                 <Link className="bg-green-500 text-blue-600 px-4 py-2 rounded hover:bg-gray-100 mr-2" href="/Auth/user-login">
                   Login
                 </Link>
