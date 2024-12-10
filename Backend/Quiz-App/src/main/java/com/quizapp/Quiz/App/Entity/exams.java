@@ -37,7 +37,7 @@ public class exams {
     @Column(nullable = false)
     private LocalDateTime dateCreate;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String expiredate;
     @Column(nullable =false)
     private int duration;
