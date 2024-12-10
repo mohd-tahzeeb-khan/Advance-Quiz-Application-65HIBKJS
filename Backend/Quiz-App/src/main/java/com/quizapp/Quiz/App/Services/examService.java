@@ -54,6 +54,7 @@ public class examService {
                         examdata.setCreator(email);
                         examdata.setCourse(course);
                         examdata.setExaminer_exams(currentexaminer);
+                        examdata.setExpiredate("Not-Defined");
                         return examsRepo.save(examdata);
                     }
 
