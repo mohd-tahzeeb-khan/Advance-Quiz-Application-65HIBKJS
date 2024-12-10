@@ -10,6 +10,7 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const {setdataoncontext}=useData();
+  const [Message, setMessage] = useState("")
   const router=useRouter();
 
   
@@ -36,6 +37,7 @@ const LoginPage = () => {
       })
       router.push("/Dashboard/user");
     }catch(err){
+      setMessage("Invlaid Credentials")
       console.log("error", err);
 
     }
@@ -47,6 +49,7 @@ const LoginPage = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
         <h2 className="text-3xl font-bold text-center text-gray-900 mb-6">Login</h2>
+        <h3>{Message}</h3>
         <form onSubmit={handleLogin} className="space-y-6">
           {/* Email Input */}
           <div>
