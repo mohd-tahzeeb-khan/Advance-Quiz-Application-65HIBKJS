@@ -33,6 +33,9 @@ public class Exams {
     public ResponseEntity<?> create(@PathVariable int id, @RequestBody exams examdata) {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
+        System.out.println(email);
+        System.out.println(id);
+        System.out.println(examdata);
         if(getloginservice.getAuth(email)){
             exams currentsave=examservice.createExam(id, email, examdata);
             if(currentsave!=null){
