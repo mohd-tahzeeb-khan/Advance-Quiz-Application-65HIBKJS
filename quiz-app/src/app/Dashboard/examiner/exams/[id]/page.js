@@ -1,6 +1,6 @@
 'use client'
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 
 const CreateExam = () => {
@@ -11,7 +11,10 @@ const CreateExam = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
-
+  //const { id }=router.query;
+  //const params=useParams();
+  const {id}=useParams();
+  //console.log(id);
   const handleCreate = async (e) => {
     e.preventDefault(); // Prevent form submission refresh
     setLoading(true);
@@ -19,15 +22,15 @@ const CreateExam = () => {
 
     // Prepare data for the POST request
     const newExamData = {
-      name: examName,
+      title: examName,
       description: examDes,
       duration: examDur,
       marks: exammarks,
     };
-
+    
     try {
       // Make the POST request using axios
-      const response = await axios.post("http://localhost:8080/exam/create", newExamData, {
+      const response = await axios.post(`http://localhost:8080/exam/create/${id}`, newExamData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -36,7 +39,7 @@ const CreateExam = () => {
 
       // Handle successful exam creation
       console.log("New exam created:", response.data);
-      router.push("/examiner/dashboard"); // Navigate to the examiner dashboard
+      router.push("/dashboard/examiner"); // Navigate to the examiner dashboard
     } catch (err) {
       // Handle error
       console.error("Error creating exam:", err);
