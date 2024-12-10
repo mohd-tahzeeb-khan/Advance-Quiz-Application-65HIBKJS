@@ -57,7 +57,7 @@ const QuizPage = () => {
     if (selectedAnswer !== null) {
       setAnswers((prevAnswers) => [
         ...prevAnswers,
-        { questionId: questions[currentQuestionIndex].id, answer: selectedAnswer },
+        { answer: selectedAnswer },
       ]);
       console.log(answers);
     }
@@ -67,9 +67,9 @@ const QuizPage = () => {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
       setTimer(30); // Reset timer for next question
     } else {
-      localStorage.setItem("answers", answers);
+      localStorage.setItem("answers", JSON.stringify(answers));
       // If it's the last question, go to the result page
-      router.push("/exam/result");
+      console.log(answers);
     }
   };
 
@@ -82,6 +82,37 @@ const QuizPage = () => {
   useEffect(() => {
     setIsTimerRunning(true);
   }, []);
+
+  // Function to handle the "Finish" button click
+  const handleFinish = async () => {
+    if (selectedAnswer !== null) {
+      setAnswers((prevAnswers) => [
+        ...prevAnswers,
+        {selectedAnswer },
+      ]);
+    }
+
+    try {
+      const configheader = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwtToken')}`,
+          "Content-Type": "application/json",
+        },
+      };
+
+      // Send the answers array to the server
+      await axios.post(
+        `http://localhost:8080/result/ResultCheck`,
+        { mcq: answers }, // Send the answers array
+        configheader
+      );
+
+      // After submitting, redirect to the result page or confirmation
+      router.push("/exam/result");
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-10">
@@ -128,6 +159,18 @@ const QuizPage = () => {
                 <p className="text-sm text-gray-500">You cannot go back to previous questions</p>
               </div>
             </>
+          )}
+
+          {/* Finish Button (appears after the last question) */}
+          {currentQuestionIndex === questions.length - 1 && (
+            <div className="mt-6 text-center">
+              <button
+                onClick={handleFinish}
+                className="px-6 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600"
+              >
+                Finish
+              </button>
+            </div>
           )}
         </div>
       </div>
