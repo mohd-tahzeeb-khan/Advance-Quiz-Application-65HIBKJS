@@ -77,7 +77,8 @@ public class Course {
 
                 ObjectMapper mapper = new ObjectMapper();
                 course course = mapper.convertValue(obj, course.class);
-                //courseservice.createCourse(course);
+                System.out.println(course);
+                courseservice.createCourse(email,course);
                 return new ResponseEntity<>("Course Created Successfully", HttpStatus.CREATED);
             }else{
                 return new ResponseEntity<>("Course Creation Failed", HttpStatus.BAD_REQUEST);
