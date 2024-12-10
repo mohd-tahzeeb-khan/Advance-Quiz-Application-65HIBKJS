@@ -8,6 +8,7 @@ export function DataProvider({children}){
         login:false,
         examid:0,
         rules:false,
+        name:null,
 
 
     })
