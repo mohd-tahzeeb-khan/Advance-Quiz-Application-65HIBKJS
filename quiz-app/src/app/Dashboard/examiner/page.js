@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useData } from "@/app/context/dataContext";
 import axios from "axios";
-
+import Link from "next/link";
+//import { Link } from "lucide-react";
 const ExaminerDashboard = () => {
   const router=useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -284,7 +285,10 @@ const handleClear = () => {
             <ul className="mt-4 space-y-4">
               {examiner.courses.map((course) => (
                 <li key={course.id} className="flex justify-between items-center">
-                  <span className="text-gray-800 w-56">{course.name}</span>
+                  <Link className="text-black" href={"examiner/exams/show"}>
+                    <span className="text-gray-800 w-56">{course.name}</span>
+                  </Link>
+                  
                   <span className="text-gray-800">{course.exams.length}</span>
                   <div className="flex space-x-4">
                     {/* Edit Exam Button */}
