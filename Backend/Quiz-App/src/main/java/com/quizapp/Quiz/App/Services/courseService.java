@@ -56,7 +56,7 @@ public class courseService {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
         int idd=currentsaveexams.getExam_id();
-        exams examdetails=examservice.getExam(idd, email);
+        exams examdetails=examservice.getExam(idd);
         if(examdetails!=null){
             Optional<course> course=courserepoinstance.findById(id);
             course currentcourse=course.get();
