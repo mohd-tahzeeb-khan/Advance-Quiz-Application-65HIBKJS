@@ -11,7 +11,7 @@ const CreateExam = () => {
     console.log("New exam created:", examName);
 
     // After successful creation, navigate to the examiner dashboard
-    router.push("/examiner/dashboard");
+    router.push("/Dashboard/examiner");
   };
 
   return (
