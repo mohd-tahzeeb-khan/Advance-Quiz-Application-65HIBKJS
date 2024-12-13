@@ -69,7 +69,7 @@ public class examService {
         }
         return null;
         }
-    public exams getExam(int id, String email){
+    public exams getExam(int id){
         if(id!=0){
             return examsRepo.findById(id).orElse(null);
         }
