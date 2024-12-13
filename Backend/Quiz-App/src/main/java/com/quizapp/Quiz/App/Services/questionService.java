@@ -1,5 +1,6 @@
 package com.quizapp.Quiz.App.Services;
 
+import com.quizapp.Quiz.App.Entity.exams;
 import com.quizapp.Quiz.App.Entity.mcq_handler;
 import com.quizapp.Quiz.App.Entity.questions;
 import com.quizapp.Quiz.App.Repository.questionsRepo;
@@ -21,15 +22,18 @@ public class questionService {
 
 
     @Autowired
+    private examService examservice;
+
+
+    @Autowired
     private MultipartConfigElement multipartConfigElement;
 
-
+//This method take 2 parameters. 1st is id of the exam. and 2nd is questions.
     public questions addquestions(int id, questions questions){
-        Optional<mcq_handler> mcq_handler=mcqservice.getdatabyid(id);
-        if(mcq_handler.isPresent()){
-            mcq_handler mcq_handlerOptional=mcq_handler.get();
-//            questions.setMcq_handler(mcq_handlerOptional);
-            return questionrepoinstence.save(questions);
+        exams examreturning=examservice.getExam(id);
+        if(examreturning!=null){
+            questionrepoinstence.save(questions);
+            return questions;
         }
         throw new RuntimeException("Please Enter the data properly."+id);
 
