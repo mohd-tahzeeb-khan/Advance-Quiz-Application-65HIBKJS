@@ -57,7 +57,7 @@ public class Exams {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
         if(getloginservice.getAuth(email)){
-            exams exam=examservice.getExam(id, email);
+            exams exam=examservice.getExam(id);
 //            return new ResponseEntity<>(exam, HttpStatus.OK);
             if(exam!=null){
                 return new ResponseEntity<>(exam, HttpStatus.OK);
