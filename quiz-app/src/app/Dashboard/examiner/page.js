@@ -285,7 +285,7 @@ const handleClear = () => {
             <ul className="mt-4 space-y-4">
               {examiner.courses.map((course) => (
                 <li key={course.id} className="flex justify-between items-center">
-                  <Link className="text-black" href={"examiner/exams/show"}>
+                  <Link className="text-black" href={`examiner/exams/show/${course.id}`}>
                     <span className="text-gray-800 w-56">{course.name}</span>
                   </Link>
                   
