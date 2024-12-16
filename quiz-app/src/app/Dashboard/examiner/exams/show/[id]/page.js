@@ -22,8 +22,8 @@ const ExamsPage = () => {
       console.log('Error fetching exams:');
     }
   }
-  const handleCreateQuestions=()=>{
-    router.push("dd");
+  const handleCreateQuestions=(examid)=>{
+    router.push(`/mcQuestions/${examid}`);
   }
   useEffect(() => {
     const fetchExams = async () => {
