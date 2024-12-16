@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 @RestController
@@ -70,8 +69,8 @@ public class MCQuestion {
         return new ResponseEntity<>(mcq, HttpStatus.OK);
     }
 
-    @PostMapping("/savedata")
-    public void  savedata(@RequestBody Map<String, Object> payload) {
+    @PostMapping("/addQuestions/{examid}")
+    public void  savedata(@RequestBody Map<String, Object> payload, @PathVariable int examid) {
         Object payloadarray = payload.get("mcq");
         System.out.println(payloadarray);
         if (payloadarray instanceof List<?>) {
@@ -102,10 +101,7 @@ public class MCQuestion {
                     questionsdata.setOptions((List<String>) options);
                     questionsdata.setAnswer((String) correctAnswer);
                     mcqservice.addanswer((Integer) id, correctAnswer.toString());
-                    questionservice.addquestions(35, questionsdata);
-
-
-
+                    questionservice.addquestions(examid, questionsdata);
     }}}}
 //        for (Map<String, Object> entry : payload.get("mcq")) {
 //            Long id = (Long) entry.get("id"); // Extract ID
