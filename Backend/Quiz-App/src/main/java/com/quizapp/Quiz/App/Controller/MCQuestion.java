@@ -1,8 +1,10 @@
 package com.quizapp.Quiz.App.Controller;
 
 
+import com.quizapp.Quiz.App.Entity.exams;
 import com.quizapp.Quiz.App.Entity.mcq_handler;
 import com.quizapp.Quiz.App.Entity.questions;
+import com.quizapp.Quiz.App.Services.examService;
 import com.quizapp.Quiz.App.Services.mcqService;
 import com.quizapp.Quiz.App.Services.questionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,13 @@ public class MCQuestion {
 
     @Autowired
     private questionService questionservice;
+//    @Autowired
+//    private exams exams;
+
     @Autowired
-    private Exams exams;
+    private examService examservice;
+//    @Autowired
+//    private Exams exams;
 
     public MCQuestion(mcqService mcqservice) {
         this.mcqservice = mcqservice;
@@ -72,7 +79,6 @@ public class MCQuestion {
     @PostMapping("/addQuestions/{examid}")
     public void  savedata(@RequestBody Map<String, Object> payload, @PathVariable int examid) {
         Object payloadarray = payload.get("mcq");
-        System.out.println(payloadarray);
         if (payloadarray instanceof List<?>) {
             // Safely cast to a List
             List<?> mcqList = (List<?>) payloadarray;
@@ -82,25 +88,34 @@ public class MCQuestion {
                 if (item instanceof Map<?, ?>) {
                     // Cast each item to a Map
                     Map<String, Object> mcqItem = (Map<String, Object>) item;
-
                     // Extract individual fields
-                    Object id = mcqItem.get("id");
+                    Object getid = mcqItem.get("id");
+                    int id = ((Long) getid).intValue();
                     Object question = mcqItem.get("question");
                     Object statement = mcqItem.get("statement");
                     Object code = mcqItem.get("code");
                     Object options = mcqItem.get("options"); // Likely a list
                     Object correctAnswer = mcqItem.get("correctAnswer");
-                    System.out.println(id);
-                    System.out.println(question);
-                    System.out.println(statement);
-                    System.out.println(code);
-                    System.out.println(options);
-                    System.out.println(correctAnswer);
                     questions questionsdata = new questions();
+                    System.out.println(questionsdata);
                     questionsdata.setQuestion((String) question);
+                    System.out.println(questionsdata);
                     questionsdata.setOptions((List<String>) options);
+                    System.out.println(questionsdata);
+                    System.out.println("1");
                     questionsdata.setAnswer((String) correctAnswer);
-                    mcqservice.addanswer((Integer) id, correctAnswer.toString());
+                    System.out.println(questionsdata);
+                    System.out.println("2");
+                    System.out.println(examid);
+                    exams getexam=examservice.getExam(examid);
+                    System.out.println(getexam);
+                    System.out.println("------------");
+                    questionsdata.setExams(getexam);
+                    System.out.println(questionsdata);
+                    System.out.println("3");
+                    mcqservice.addanswer(examid, correctAnswer.toString());
+                    System.out.println("4");
+                    System.out.println("questions are"+questionsdata);
                     questionservice.addquestions(examid, questionsdata);
     }}}}
 //        for (Map<String, Object> entry : payload.get("mcq")) {
