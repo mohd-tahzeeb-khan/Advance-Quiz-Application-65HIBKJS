@@ -59,7 +59,7 @@ const AddQuestionsPage = () => {
       //withCredentials:true,
     };
     try {
-      const response = await axios.post(`http://localhost:8080/mcquestion/savedata`, {
+      const response = await axios.post(`http://localhost:8080/mcquestion/addQuestions/${insert}`, {
         mcq:questions
       },
         config
