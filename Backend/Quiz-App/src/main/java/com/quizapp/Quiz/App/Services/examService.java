@@ -1,15 +1,10 @@
 package com.quizapp.Quiz.App.Services;
 
-import com.quizapp.Quiz.App.Controller.Course;
-import com.quizapp.Quiz.App.Controller.Result;
-import com.quizapp.Quiz.App.Controller.User;
 import com.quizapp.Quiz.App.Entity.*;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.quizapp.Quiz.App.Repository.examsRepo;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -70,10 +65,15 @@ public class examService {
         return null;
         }
     public exams getExam(int id){
+        System.out.println(id);
         if(id!=0){
+            System.out.println("Here is the right way.");
+            Optional<exams> getexam=examsRepo.findById(id);
+            //System.out.println("here is the error"+getexam);
             return examsRepo.findById(id).orElse(null);
         }
         else{
+            System.out.println("Here is the Wrong way.");
             return null;
         }
 
