@@ -107,10 +107,12 @@ public class MCQuestion {
                     System.out.println(questionsdata);
                     System.out.println("2");
                     System.out.println(examid);
-                    exams getexam=examservice.getExam(examid);
-                    System.out.println(getexam);
+                    System.out.println("The Problem is"+examservice.getExam(examid));
+                    //exams getexam=examservice.getExam(examid);
+                    exams exam=examservice.getExam(examid);
+                    System.out.println(exam);
                     System.out.println("------------");
-                    questionsdata.setExams(getexam);
+                    questionsdata.setExams(exam);
                     System.out.println(questionsdata);
                     System.out.println("3");
                     mcqservice.addanswer(examid, correctAnswer.toString());
