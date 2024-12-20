@@ -107,7 +107,7 @@ public class MCQuestion {
                     System.out.println(questionsdata);
                     System.out.println("2");
                     System.out.println(examid);
-                    System.out.println("The Problem is"+examservice.getExam(examid));
+                    System.out.println("The Problem is");
                     //exams getexam=examservice.getExam(examid);
                     exams exam=examservice.getExam(examid);
                     System.out.println(exam);
