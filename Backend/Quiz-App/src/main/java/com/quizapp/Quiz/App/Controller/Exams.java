@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("exam")
@@ -57,7 +58,8 @@ public class Exams {
         Authentication authentication= SecurityContextHolder.getContext().getAuthentication();
         String email=authentication.getName();
         if(getloginservice.getAuth(email)){
-            exams exam=examservice.getExam(id);
+            Optional<exams> exam=examservice.getExam(id);
+            System.out.println(exam);
 //            return new ResponseEntity<>(exam, HttpStatus.OK);
             if(exam!=null){
                 return new ResponseEntity<>(exam, HttpStatus.OK);
