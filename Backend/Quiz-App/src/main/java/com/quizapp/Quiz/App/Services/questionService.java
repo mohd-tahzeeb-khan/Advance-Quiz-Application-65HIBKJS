@@ -30,7 +30,7 @@ public class questionService {
 
 //This method take 2 parameters. 1st is id of the exam. and 2nd is questions.
     public questions addquestions(int id, questions questions){
-        exams examreturning=examservice.getExam(id);
+        exams examreturning=examservice.geteExam(id);
         System.out.println(questions);
         if(examreturning!=null){
             questionrepoinstence.save(questions);
