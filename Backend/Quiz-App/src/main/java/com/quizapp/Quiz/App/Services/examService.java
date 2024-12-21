@@ -64,12 +64,38 @@ public class examService {
         }
         return null;
         }
-    public exams getExam(int id){
+    public Optional<exams> getExam(int id){
         System.out.println(id);
         if(id!=0){
             System.out.println("Here is the right way.");
-            Optional<exams> getexam=examsRepo.findById(id);
-            //System.out.println("here is the error"+getexam);
+            try {
+                Optional<exams> getexam=examsRepo.findById(id);
+                return getexam;
+                //System.out.println("here is the error"+getexam);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+                return null;
+//            return examsRepo.findById(id).orElse(null);
+        }
+        else{
+            System.out.println("Here is the Wrong way.");
+            return null;
+        }
+
+    }
+    public exams geteExam(int id){
+        System.out.println(id);
+        if(id!=0){
+            System.out.println("Here is the right way.");
+            try {
+                Optional<exams> getexam=examsRepo.findById(id);
+
+                //System.out.println("here is the error"+getexam);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+            //return null;
             return examsRepo.findById(id).orElse(null);
         }
         else{
