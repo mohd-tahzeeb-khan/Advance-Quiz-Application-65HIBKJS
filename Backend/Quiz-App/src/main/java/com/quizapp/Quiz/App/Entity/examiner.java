@@ -46,15 +46,12 @@ public class examiner {
     @Column(nullable = true)
     private int otp=0;
 
-//
-//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<result> result = new ArrayList<>();
-    //
+
     @OneToMany(mappedBy = "examiner_course", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<course> course = new ArrayList<>();
 
 
-    @Column(nullable = false)
+
     @OneToMany(mappedBy = "examiner_exams")
     private List<exams> exams=new ArrayList<>();
 
