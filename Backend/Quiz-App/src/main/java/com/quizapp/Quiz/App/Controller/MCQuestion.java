@@ -97,27 +97,28 @@ public class MCQuestion {
                     Object options = mcqItem.get("options"); // Likely a list
                     Object correctAnswer = mcqItem.get("correctAnswer");
                     questions questionsdata = new questions();
-                    System.out.println(questionsdata);
+                    System.out.println("Black"+questionsdata);
                     questionsdata.setQuestion((String) question);
-                    System.out.println(questionsdata);
+                    System.out.println("Added Question"+questionsdata);
                     questionsdata.setOptions((List<String>) options);
-                    System.out.println(questionsdata);
+                    System.out.println("Added Options"+questionsdata);
                     System.out.println("1");
                     questionsdata.setAnswer((String) correctAnswer);
-                    System.out.println(questionsdata);
-                    System.out.println("2");
-                    System.out.println(examid);
-                    System.out.println("The Problem is");
+                    System.out.println("Added Answer"+questionsdata);
+                    System.out.println("Now, Exam id is"+examid);
                     //exams getexam=examservice.getExam(examid);
-                    exams exam=examservice.getExam(examid);
-                    System.out.println(exam);
-                    System.out.println("------------");
+                    exams exam=examservice.geteExam(examid);
+                    if(exam==null){
+                        System.out.println("Exam is null");
+                    }
+                    //System.out.println(exam);
+
                     questionsdata.setExams(exam);
-                    System.out.println(questionsdata);
-                    System.out.println("3");
+                    System.out.println("Added Exam"+questionsdata);
+                   // System.out.println(questionsdata);
                     mcqservice.addanswer(examid, correctAnswer.toString());
-                    System.out.println("4");
-                    System.out.println("questions are"+questionsdata);
+                    System.out.println("Added Answer to the different variable");
+                    System.out.println("questions are"+ questionsdata);
                     questionservice.addquestions(examid, questionsdata);
     }}}}
 //        for (Map<String, Object> entry : payload.get("mcq")) {
