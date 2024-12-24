@@ -5,7 +5,6 @@ The system supports MCQ-based tests, providing an interactive platform for stude
 
 Features:
 Student Side:
-
 Student registration and login system.
 Take quizzes created by teachers.
 View results and scores after completing a test.
