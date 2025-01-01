@@ -59,7 +59,7 @@ public class Exams {
         String email=authentication.getName();
         if(getloginservice.getAuth(email)){
             Optional<exams> exam=examservice.getExam(id);
-            System.out.println(exam);
+            //System.out.println(exam);
 //            return new ResponseEntity<>(exam, HttpStatus.OK);
             if(exam!=null){
                 return new ResponseEntity<>(exam, HttpStatus.OK);
