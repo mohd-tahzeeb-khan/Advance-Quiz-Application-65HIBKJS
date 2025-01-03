@@ -64,15 +64,18 @@ public class examService {
         }
         return null;
         }
-    public Optional<exams> getExam(int id){
+    public exams getExam(int id){
         System.out.println(id);
         if(id!=0){
             System.out.println("Here is the right way.");
             try {
-                Optional<exams> getexam=examsRepo.findById(id);
+                System.out.println("getexam-1");
+                exams getexam=examsRepo.findById(id).orElse(null);
+                System.out.println("..");
                 return getexam;
                 //System.out.println("here is the error"+getexam);
             }catch (Exception e){
+                System.out.println("getexam-2");
                 System.out.println(e.getMessage());
             }
                 return null;
@@ -89,8 +92,7 @@ public class examService {
         if(id!=0){
             System.out.println("Here is the right way.");
             try {
-                Optional<exams> getexam=examsRepo.findById(id);
-
+                exams getexam=examsRepo.findById(id).orElse(null);
                 //System.out.println("here is the error"+getexam);
             }catch (Exception e){
                 System.out.println(e.getMessage());
