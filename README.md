@@ -12,9 +12,13 @@ Teacher/Examiner Side:
 Create new tests, including questions and options.
 Edit and delete existing tests.
 View and manage all student results.
+
+
 Technologies Used:
 Backend: Java, Spring Boot
 Frontend: HTML, CSS, JavaScript (React for future integration)
 Database: MySQL/SQLite
 Authentication: JWT(JSON Web Tokens)
+
+
 This system simulates a real-world use case of online examination management, making it a great resource for educational platforms. It's built with scalability in mind and follows industry best practices for both front-end and back-end development.
