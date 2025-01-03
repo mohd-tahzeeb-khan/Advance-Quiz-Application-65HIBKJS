@@ -57,6 +57,7 @@ public class course {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @Nullable
     @ToString.Exclude
+    @JsonIgnore
     private List<exams> exams = new ArrayList<>();
 
     @ManyToOne
